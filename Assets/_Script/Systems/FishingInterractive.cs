@@ -1,5 +1,4 @@
 using UnityEngine;
-using UnityEngine.InputSystem;
 
 public class FishingInteraction : Singleton<FishingInteraction>
 {
@@ -40,9 +39,9 @@ public class FishingInteraction : Singleton<FishingInteraction>
         if (fishingUI != null)
             fishingUI.SetActive(true);
 
+        InventorySystem.Instance.openUI(true);
+
         // (Tuỳ chọn) Khoá điều khiển Player
-        GameInput.Instance.EnablePlayerInput(false);
-        GameInput.Instance.EnableUIInput(true);
         CameraController.Instance.EnterFishingView();
         fishingMinigame.OnFinish += EndFishing;
         Debug.Log("Fishing Mini Game Started!");
@@ -59,8 +58,6 @@ public class FishingInteraction : Singleton<FishingInteraction>
             fishingUI.SetActive(false);
 
         // Mở lại điều khiển player nếu bạn từng khoá
-        GameInput.Instance.EnablePlayerInput(true);
-        GameInput.Instance.EnableUIInput(false);
 
         CameraController.Instance.ExitFishingView();
         Debug.Log("Fishing Ended");

@@ -5426,7 +5426,7 @@ MonoBehaviour:
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
-  m_Sprite: {fileID: 21300000, guid: a74ec407198bee74aafc0c8a2335ede9, type: 3}
+  m_Sprite: {fileID: 7482667652216324306, guid: a74ec407198bee74aafc0c8a2335ede9, type: 3}
   m_Type: 3
   m_PreserveAspect: 0
   m_FillCenter: 1
@@ -6259,7 +6259,6 @@ MonoBehaviour:
   minSuccessZoneSize: 5
   maxRounds: 5
   minRounds: 2
-  item: {fileID: 11400000, guid: 4414b8d962ce24741ae21bd7b6295604, type: 2}
 --- !u!1001 &580802061
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -6541,7 +6540,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 0
+  m_IsActive: 1
 --- !u!224 &681357258
 RectTransform:
   m_ObjectHideFlags: 0
@@ -7375,7 +7374,7 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1163835716}
   serializedVersion: 2
-  m_LocalRotation: {x: 0.4929252, y: -0.0011359525, z: 0.0006435565, w: 0.87007076}
+  m_LocalRotation: {x: 0.49292508, y: -0.0012498728, z: 0.00070809614, w: 0.8700706}
   m_LocalPosition: {x: 2.3149529, y: 94.67933, z: -47.17563}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
@@ -8091,14 +8090,14 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 69f051b6b3dfc7746b693aa602227b81, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::InventorySystem
-  inventory: {fileID: 681357258}
-  slotFrame: {fileID: 619078709}
+  inventoryUI: {fileID: 619078709}
   gridLayoutGroup: {fileID: 619078710}
   itemSlotPrefab: {fileID: 1320641736733498760, guid: 656f8dde93d80fe4caeca4beb5d90401, type: 3}
   blockerPrefab: {fileID: 1320641736733498760, guid: c449ae18c86e73f40bc736dc9299bb91, type: 3}
   itemFrame: {fileID: 820212661}
   itemUIPrefab: {fileID: 6659076186952481856, guid: cb410f49073c6274ea8f09d689607406, type: 3}
-  itemUIs: []
+  testItemData1: {fileID: 11400000, guid: 4414b8d962ce24741ae21bd7b6295604, type: 2}
+  testItemData2: {fileID: 11400000, guid: 3e32398a3a52d6d4aa9341e0dc8e54f6, type: 2}
 --- !u!1 &1467903405
 GameObject:
   m_ObjectHideFlags: 0
@@ -8911,7 +8910,7 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1944249987}
   serializedVersion: 2
-  m_LocalRotation: {x: 0.49292517, y: -0.0011359523, z: 0.00064355606, w: 0.87007076}
+  m_LocalRotation: {x: 0.49292505, y: -0.0012498727, z: 0.00070809614, w: 0.87007064}
   m_LocalPosition: {x: 2.314951, y: 94.67933, z: -47.17562}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0

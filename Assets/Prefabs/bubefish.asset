@@ -1,0 +1,20 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 17063d482f6119c4d8dead8046dcb07c, type: 3}
+  m_Name: bubefish
+  m_EditorClassIdentifier: Assembly-CSharp::ItemData
+  itemId: 
+  itemName: 
+  description: 
+  icon: {fileID: 7482667652216324306, guid: a74ec407198bee74aafc0c8a2335ede9, type: 3}
+  itemShape: {fileID: 11400000, guid: 8ce414ac9b57fd64b80b7f5eb2b1a42d, type: 2}
+  itemType: 0

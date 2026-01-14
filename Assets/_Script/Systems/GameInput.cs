@@ -8,6 +8,8 @@ public class GameInput : Singleton<GameInput>
     private InputAction m_MoveAction;
     private InputAction m_FishAction;
     private InputAction m_CatchFishAction;
+    private InputAction m_OpenInventoryAction;
+    private InputAction m_CloseInventoryAction;
 
     private void OnEnablePlayer()
     {
@@ -29,20 +31,19 @@ public class GameInput : Singleton<GameInput>
         inputActions.FindActionMap("UI").Disable();
     }
 
-    public void EnablePlayerInput(bool enabled)
+    public void EnableUIInput(bool enable)
     {
-        if (enabled)
-            OnEnablePlayer();
-        else
-            OnDisablePlayer();
-    }
-
-    public void EnableUIInput(bool enabled)
-    {
-        if (enabled)
+        Debug.Log("EnableUIInput: " + enable);
+        if (enable)
+        {
             OnEnableUI();
+            OnDisablePlayer();
+        }
         else
+        {
             OnDisableUI();
+            OnEnablePlayer();
+        }
     }
 
     protected override void Awake()
@@ -53,6 +54,25 @@ public class GameInput : Singleton<GameInput>
         m_MoveAction = InputSystem.actions.FindAction("Move");
         m_FishAction = InputSystem.actions.FindAction("Fish");
         m_CatchFishAction = InputSystem.actions.FindAction("CatchFish");
+        m_OpenInventoryAction = InputSystem.actions.FindAction("OpenInventory");
+        m_CloseInventoryAction = InputSystem.actions.FindAction("CloseInventory");
+    }
+
+    void Update()
+    {
+        if (m_FishAction.WasPressedThisFrame()
+        || m_OpenInventoryAction.WasPressedThisFrame())
+        {
+            Debug.Log("Fish pressed");
+            EnableUIInput(true);
+        }
+
+        if (m_CloseInventoryAction.WasPressedThisFrame())
+        {
+            Debug.Log("Close inventory pressed");
+            EnableUIInput(false);
+        }
+
     }
 
     public Vector2 GetMovement()
@@ -69,5 +89,15 @@ public class GameInput : Singleton<GameInput>
     public bool CatchFish()
     {
         return m_CatchFishAction.WasPressedThisFrame();
+    }
+
+    public bool OpenInventory()
+    {
+        return m_OpenInventoryAction.WasPressedThisFrame();
+    }
+
+    public bool CloseInventory()
+    {
+        return m_CloseInventoryAction.WasPressedThisFrame();
     }
 }

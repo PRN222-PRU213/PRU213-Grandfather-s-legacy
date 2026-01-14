@@ -35,6 +35,8 @@ public class FishingMinigame : MonoBehaviour
     private int totalRounds;
     private int currentRound = 0;
 
+    public ItemData item;
+
     private FishingState state = FishingState.Idle;
     public System.Action OnFinish;
 
@@ -114,6 +116,7 @@ public class FishingMinigame : MonoBehaviour
             OnFinish = null;
             fishingUI.SetActive(false);
             state = FishingState.Idle;
+            InventorySystem.Instance.SpawnItem(item);
         }
     }
 
@@ -124,8 +127,6 @@ public class FishingMinigame : MonoBehaviour
 
         float zoneRange = successImg.fillAmount * 360f;
         float successEndAngle = CaculatorAngle(successBeginAngle, zoneRange);
-
-        Debug.Log(successBeginAngle + " " + trackAngle + " " + successEndAngle);
 
         return IsAngleInRange(trackAngle, successEndAngle, successBeginAngle);
     }
