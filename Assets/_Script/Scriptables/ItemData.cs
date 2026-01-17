@@ -19,6 +19,12 @@ public class ItemData : ScriptableObject
     [Header("Grid Shape")]
     public ItemShape itemShape;
 
+    [Header("Stats")]
+    public float weight;
+    public float value;
+    public float MAX_WEIGHT;
+    public float MAX_VALUE;
+
     [Header("Type")]
     public ItemType itemType;
 }

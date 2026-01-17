@@ -1,11 +1,12 @@
 using UnityEngine;
 using Unity.Cinemachine;
 
-public class CameraController : Singleton<CameraController>
+public class CameraManager : Singleton<CameraManager>
 {
     [Header("Cinemachine")]
     [SerializeField] private CinemachineCamera normalCamera;
     [SerializeField] private CinemachineCamera fishingCamera;
+    [SerializeField] private CinemachineCamera defaultCamera;
 
     private CinemachineBrain brain;
 
@@ -22,7 +23,7 @@ public class CameraController : Singleton<CameraController>
     public void EnterFishingView()
     {
         fishingCamera.Priority = 20;
-        normalCamera.Priority = 0;
+        defaultCamera.Priority = 0;
     }
 
     public void ExitFishingView()
@@ -34,7 +35,7 @@ public class CameraController : Singleton<CameraController>
 
     void SetNormalView()
     {
-        normalCamera.Priority = 20;
+        defaultCamera.Priority = 20;
         fishingCamera.Priority = 0;
     }
 }

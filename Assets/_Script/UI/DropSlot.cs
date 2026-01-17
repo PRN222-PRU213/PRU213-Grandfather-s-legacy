@@ -4,6 +4,7 @@ using UnityEngine.UI;
 
 public class DropSlot : MonoBehaviour, IDropHandler
 {
+    [SerializeField] public InventorySystem system;
     public int x;
     public int y;
     public bool isOccupied = false;
@@ -18,19 +19,7 @@ public class DropSlot : MonoBehaviour, IDropHandler
         if (eventData.pointerDrag != null)
         {
             ItemUI itemUI = eventData.pointerDrag.GetComponent<ItemUI>();
-            ItemData itemData = itemUI.itemData;
-
-            if (InventorySystem.Instance.CanPlace(itemData, x, y))
-            {
-                InventorySystem.Instance.PlaceItem(itemData, x, y);
-                itemUI.SnapToSlot(this);
-
-            }
-            else
-            {
-                InventorySystem.Instance.PlaceItem(itemData, itemUI.originalX, itemUI.originalY);
-                itemUI.ReturnToOriginalSlot();
-            }
+            system.DropItem(itemUI, x, y);
         }
     }
 

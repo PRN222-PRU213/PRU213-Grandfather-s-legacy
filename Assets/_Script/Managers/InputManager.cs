@@ -1,11 +1,13 @@
 using UnityEngine;
 using UnityEngine.InputSystem;
 
-public class GameInput : Singleton<GameInput>
+public class InputManager : Singleton<InputManager>
 {
     public InputActionAsset inputActions;
 
     private InputAction m_MoveAction;
+    private InputAction m_LookAction;
+    private InputAction m_RotateCameraAction;
     private InputAction m_FishAction;
     private InputAction m_CatchFishAction;
     private InputAction m_OpenInventoryAction;
@@ -52,27 +54,12 @@ public class GameInput : Singleton<GameInput>
         EnableUIInput(false);
 
         m_MoveAction = InputSystem.actions.FindAction("Move");
+        m_LookAction = InputSystem.actions.FindAction("Look");
+        m_RotateCameraAction = InputSystem.actions.FindAction("RotateCamera");
         m_FishAction = InputSystem.actions.FindAction("Fish");
         m_CatchFishAction = InputSystem.actions.FindAction("CatchFish");
         m_OpenInventoryAction = InputSystem.actions.FindAction("OpenInventory");
         m_CloseInventoryAction = InputSystem.actions.FindAction("CloseInventory");
-    }
-
-    void Update()
-    {
-        if (m_FishAction.WasPressedThisFrame()
-        || m_OpenInventoryAction.WasPressedThisFrame())
-        {
-            Debug.Log("Fish pressed");
-            EnableUIInput(true);
-        }
-
-        if (m_CloseInventoryAction.WasPressedThisFrame())
-        {
-            Debug.Log("Close inventory pressed");
-            EnableUIInput(false);
-        }
-
     }
 
     public Vector2 GetMovement()
@@ -80,6 +67,15 @@ public class GameInput : Singleton<GameInput>
         return m_MoveAction.ReadValue<Vector2>();
     }
 
+    public Vector2 GetLookDirection()
+    {
+        return m_LookAction.ReadValue<Vector2>();
+    }
+
+    public bool GetCameraRotation()
+    {
+        return m_RotateCameraAction.IsPressed();
+    }
 
     public bool FishPressed()
     {

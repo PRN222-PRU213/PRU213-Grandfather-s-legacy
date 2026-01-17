@@ -17,4 +17,8 @@ MonoBehaviour:
   description: 
   icon: {fileID: 7482667652216324306, guid: a74ec407198bee74aafc0c8a2335ede9, type: 3}
   itemShape: {fileID: 11400000, guid: 8ce414ac9b57fd64b80b7f5eb2b1a42d, type: 2}
+  weight: 40
+  value: 190
+  MAX_WEIGHT: 50
+  MAX_VALUE: 200
   itemType: 0

@@ -1,35 +1,27 @@
 using UnityEngine;
-using UnityEngine.Events;
 
 public class FishZoneController : MonoBehaviour
 {
+    [SerializeField] private FishingSystem fishingSystem;
+
     [Header("Zone Settings")]
     public bool isActive = true;          // Zone có đang hoạt động không
-    public GameObject zoneVisual;         // Hiệu ứng vùng cá (vòng tròn nước, particle,...)
-
-    [Header("Events")]
-    public UnityEvent onPlayerEnterZone;
-    public UnityEvent onPlayerExitZone;
-
+    public ParticleSystem zoneVisual;         // Hiệu ứng vùng cá (vòng tròn nước, particle,...)
     public bool ditectedPlayer = false;
+    public ItemData item;
 
-    private void Start()
+    private void Awake()
     {
-        if (zoneVisual != null)
-            zoneVisual.SetActive(isActive);
+        SetZoneActive(true);
     }
-
     private void OnTriggerEnter(Collider other)
     {
         if (!isActive) return;
         if (!other.CompareTag("Player")) return;
 
         // Báo cho hệ thống câu cá
-        FishingInteraction.Instance.SetCanFish(true);
+        fishingSystem.SetCanFish(true, item);
         ditectedPlayer = true;
-
-        // Trigger hiệu ứng, âm thanh... nếu muốn
-        onPlayerEnterZone?.Invoke();
     }
 
     private void OnTriggerExit(Collider other)
@@ -37,17 +29,22 @@ public class FishZoneController : MonoBehaviour
         if (!isActive) return;
         if (!other.CompareTag("Player")) return;
 
-        FishingInteraction.Instance.SetCanFish(false);
+        fishingSystem.SetCanFish(false, null);
         ditectedPlayer = false;
-        onPlayerExitZone?.Invoke();
     }
 
     // Có thể gọi từ spawner để bật tắt zone
     public void SetZoneActive(bool value)
     {
         isActive = value;
+        if (value)
+        {
+            zoneVisual.Play();
 
-        if (zoneVisual != null)
-            zoneVisual.SetActive(value);
+        }
+        else
+        {
+            zoneVisual.Stop();
+        }
     }
 }

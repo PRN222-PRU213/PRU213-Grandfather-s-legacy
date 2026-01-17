@@ -20,7 +20,7 @@ public class BoatController : MonoBehaviour
 
     void FixedUpdate()
     {
-        Vector2 move = GameInput.Instance.GetMovement();
+        Vector2 move = InputManager.Instance.GetMovement();
         float h = move.x;
         float v = move.y;
 
