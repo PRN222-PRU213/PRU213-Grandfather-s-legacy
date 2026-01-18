@@ -42,8 +42,12 @@ public class FishingManager : Singleton<FishingManager>
         difficultyMultiplier = Mathf.Clamp01(item.weight / item.MAX_WEIGHT * 0.3f +
                                             item.value / item.MAX_VALUE * 0.7f);
         totalRounds = GetTotalRounds();
+        InitMatch();
+    }
+
+    public void InitMatch()
+    {
         currentRound = 0;
-        Debug.Log("totalround: " + totalRounds);
     }
 
     public void ResetStat()

@@ -82,7 +82,6 @@ public class InventoryManager : Singleton<InventoryManager>
                 int gy = startY + y;
 
                 itemGrid[gx, gy] = isPlace;
-                Debug.Log(slots[gx, gy].name);
                 slots[gx, gy].SetOccupied(isPlace);
             }
         }

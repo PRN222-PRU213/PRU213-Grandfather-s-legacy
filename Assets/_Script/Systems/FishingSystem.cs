@@ -74,11 +74,13 @@ public class FishingSystem : MonoBehaviour
 
         fishingUI.Setup(item, fishingManager.totalRounds, fishingManager.difficultyMultiplier);
         fishingManager.ResetStat();
+        fishingUI.EachTurn(fishingManager.successZoneSize);
     }
 
     public void EndFishing()
     {
         cameraManager.ExitFishingView();
+        fishingManager.InitMatch();
         inventorySystem.AddItem(fishingManager.item);
     }
 }

@@ -1,7 +1,9 @@
 using UnityEngine;
 using UnityEngine.EventSystems;
+using UnityEngine.InputSystem;
 
-public class DragItem : MonoBehaviour, IDragHandler, IEndDragHandler, IBeginDragHandler
+public class DragItem : MonoBehaviour, IPointerDownHandler
+// IDragHandler, IEndDragHandler, IBeginDragHandler, 
 {
     [SerializeField] public InventorySystem system;
     private CanvasGroup canvasGroup;
@@ -13,22 +15,11 @@ public class DragItem : MonoBehaviour, IDragHandler, IEndDragHandler, IBeginDrag
         rt = GetComponent<RectTransform>();
         offset = new Vector2(rt.rect.width / 4, -rt.rect.height / 4);
     }
-    public void OnBeginDrag(PointerEventData eventData)
-    {
-        canvasGroup.alpha = 0.6f;
-        ItemUI itemUI = eventData.pointerDrag.GetComponent<ItemUI>();
-        system.DragItem(itemUI);
-    }
 
-    public void OnDrag(PointerEventData eventData)
+    public void OnPointerDown(PointerEventData eventData)
     {
-        rt.position = eventData.position - offset;
-    }
-
-    public void OnEndDrag(PointerEventData eventData)
-    {
-        canvasGroup.alpha = 1f;
-        ItemUI itemUI = eventData.pointerDrag.GetComponent<ItemUI>();
-        system.EndDragItem(itemUI);
+        if (eventData.button != PointerEventData.InputButton.Left)
+            return;
+        system.DragItem(gameObject);
     }
 }

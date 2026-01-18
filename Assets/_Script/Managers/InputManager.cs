@@ -12,6 +12,8 @@ public class InputManager : Singleton<InputManager>
     private InputAction m_CatchFishAction;
     private InputAction m_OpenInventoryAction;
     private InputAction m_CloseInventoryAction;
+    private InputAction m_RotateItemAction;
+    private InputAction m_RemoveItemAction;
 
     private void OnEnablePlayer()
     {
@@ -35,7 +37,6 @@ public class InputManager : Singleton<InputManager>
 
     public void EnableUIInput(bool enable)
     {
-        Debug.Log("EnableUIInput: " + enable);
         if (enable)
         {
             OnEnableUI();
@@ -60,6 +61,8 @@ public class InputManager : Singleton<InputManager>
         m_CatchFishAction = InputSystem.actions.FindAction("CatchFish");
         m_OpenInventoryAction = InputSystem.actions.FindAction("OpenInventory");
         m_CloseInventoryAction = InputSystem.actions.FindAction("CloseInventory");
+        m_RotateItemAction = InputSystem.actions.FindAction("RotateItem");
+        m_RemoveItemAction = InputSystem.actions.FindAction("RemoveItem");
     }
 
     public Vector2 GetMovement()
@@ -95,5 +98,15 @@ public class InputManager : Singleton<InputManager>
     public bool CloseInventory()
     {
         return m_CloseInventoryAction.WasPressedThisFrame();
+    }
+
+    public bool RotateItem()
+    {
+        return m_RotateItemAction.WasPressedThisFrame();
+    }
+
+    public bool RemoveItem()
+    {
+        return m_RemoveItemAction.WasPressedThisFrame();
     }
 }

@@ -27,6 +27,16 @@ public class ItemUI : MonoBehaviour
         );
     }
 
+    public void Rotate()
+    {
+
+    }
+
+    public void Remove()
+    {
+        Destroy(gameObject);
+    }
+
     public void SetOccupied(bool occupied)
     {
         Image iconImage = GetComponent<Image>();

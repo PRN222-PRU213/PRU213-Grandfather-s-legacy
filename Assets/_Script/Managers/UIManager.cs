@@ -5,7 +5,7 @@ public class UIManager : Singleton<UIManager>
     [Header("UI")]
     [SerializeField] private GameObject InventoryUI;
     [SerializeField] private GameObject FishingUI;
-    [SerializeField] private GameObject SaleUI;
+    [SerializeField] private GameObject StoreUI;
     [SerializeField] private GameObject TalkUI;
 
     public enum state

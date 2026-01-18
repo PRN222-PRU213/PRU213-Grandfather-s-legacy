@@ -13,4 +13,14 @@ public class ItemShape : ScriptableObject
     {
         return cells[y * width + x] == 1;
     }
+
+    public int GetTotalCells()
+    {
+        int count = 0;
+        foreach (var cell in cells)
+        {
+            if (cell == 1) count++;
+        }
+        return count;
+    }
 }

@@ -13,6 +13,7 @@ public class InventoryUI : MonoBehaviour
     [SerializeField] private GridLayoutGroup gridLayoutGroup;
     [SerializeField] private RectTransform itemFrame;
     [SerializeField] private Text moneyLabel;
+    [SerializeField] private Text capacityLabel;
 
     [Header("Prefab")]
     [SerializeField] private GameObject itemSlotPrefab;
@@ -56,6 +57,11 @@ public class InventoryUI : MonoBehaviour
     public void SetMoney(int amount)
     {
         moneyLabel.text = $"${amount}";
+    }
+
+    public void SetCapacity(int containing, int capacity)
+    {
+        capacityLabel.text = $"{containing}/{capacity}";
     }
 
     public ItemUI InitItem(ItemData item)
