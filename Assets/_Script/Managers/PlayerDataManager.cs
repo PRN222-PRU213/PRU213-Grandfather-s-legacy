@@ -8,6 +8,7 @@ public class PlayerDataManager : Singleton<PlayerDataManager>
     public int Capacity => Data?.capacity ?? 0;
     public int Containing => Data?.containing ?? 0;
     public IReadOnlyList<string> Items => Data.items;
+    public InventoryData InventoryData => Data.inventoryData;
 
     protected override void Awake()
     {

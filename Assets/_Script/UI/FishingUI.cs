@@ -4,7 +4,6 @@ using UnityEngine.UI;
 public class FishingUI : MonoBehaviour
 {
     [Header("References")]
-    public InventorySystem system;
     public RectTransform successZone;     // Tay quay
     public RectTransform trackZone;      // Vùng bắt cá
     public Image successImg;

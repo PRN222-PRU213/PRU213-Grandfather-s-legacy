@@ -3,9 +3,8 @@ using UnityEngine.EventSystems;
 using UnityEngine.UI;
 
 public class DropSlot : MonoBehaviour, IPointerDownHandler
-//                                              ,IDropHandler
 {
-    [SerializeField] public InventorySystem system;
+    public UIController uiController;
     public int x;
     public int y;
     public bool isOccupied = false;
@@ -21,7 +20,10 @@ public class DropSlot : MonoBehaviour, IPointerDownHandler
         if (eventData.button != PointerEventData.InputButton.Left)
             return;
 
-        system.DropItem(x, y);
+        if (!uiController.isHoldingItem)
+            return;
+
+        uiController.StopHoldingItem(this);
     }
     public void SetOccupied(bool occupied)
     {

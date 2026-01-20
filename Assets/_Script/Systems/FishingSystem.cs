@@ -1,5 +1,4 @@
 using System;
-using Unity.VisualScripting;
 using UnityEngine;
 
 public class FishingSystem : MonoBehaviour
@@ -7,7 +6,7 @@ public class FishingSystem : MonoBehaviour
     [Header("References")]
     [SerializeField] private FishingManager fishingManager;
     [SerializeField] private FishingUI fishingUI;
-    [SerializeField] private InventorySystem inventorySystem;
+    [SerializeField] private InventoryController inventoryController;
     [SerializeField] private InputManager inputManager;
     [SerializeField] private UIManager uiManager;
     [SerializeField] private CameraManager cameraManager;
@@ -51,7 +50,7 @@ public class FishingSystem : MonoBehaviour
                         fishingUI.EachTurn(fishingManager.successZoneSize);
                         return;
                     }
-                    EndFishing();
+                    EndFishing(fishingManager.item);
                     fishingManager.state = FishingManager.FishingState.Idle;
                 }
                 fishingUI.MoveTrack(fishingManager.trackSpeed);
@@ -77,10 +76,10 @@ public class FishingSystem : MonoBehaviour
         fishingUI.EachTurn(fishingManager.successZoneSize);
     }
 
-    public void EndFishing()
+    public void EndFishing(ItemData item)
     {
         cameraManager.ExitFishingView();
         fishingManager.InitMatch();
-        inventorySystem.AddItem(fishingManager.item);
+        inventoryController.AddItemToPlayer(item);
     }
 }

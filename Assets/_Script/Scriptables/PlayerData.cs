@@ -8,5 +8,5 @@ public class PlayerData
     public int containing;
     public List<string> items = new();
 
-    public InventoryData inventoryData = new InventoryData();
+    public InventoryData inventoryData = new InventoryData(6, 7);
 }

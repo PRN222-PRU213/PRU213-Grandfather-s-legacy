@@ -7,12 +7,16 @@ public class ItemUI : MonoBehaviour
 
     public int originalX = 0;
     public int originalY = 0;
+    public InventoryUI OwnerInventoryUI;
+
     [Header("Data")]
     public ItemData itemData;
 
-    public void Init(ItemData data)
+    public void Init(ItemData data, InventoryUI ownerInventoryUI)
     {
         itemData = data;
+        OwnerInventoryUI = ownerInventoryUI;
+
         Image iconImage = GetComponent<Image>();
         iconImage.sprite = itemData.icon;
         iconImage.alphaHitTestMinimumThreshold = 0.01f;
