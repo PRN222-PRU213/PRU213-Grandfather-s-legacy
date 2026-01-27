@@ -1,5 +1,4 @@
 using UnityEngine;
-using UnityEngine.InputSystem;
 
 public class InventoryController : MonoBehaviour
 {
@@ -8,12 +7,16 @@ public class InventoryController : MonoBehaviour
     [SerializeField] InventoryUI playerUI;
     [SerializeField] InventoryUI otherUI;
 
-    private InventoryViewModel playerVM;
-    private InventoryViewModel otherVM;
-
     [SerializeField] private UIManager uiManager;
     [SerializeField] private InputManager inputManager;
     [SerializeField] private PlayerDataManager playerManager;
+
+    public event System.Func<ItemUI, DropSlot, bool> OnCanPlace;
+
+    private InventoryViewModel playerVM;
+    private InventoryViewModel otherVM;
+
+    private bool isOtherInventory = false;
 
     void Awake()
     {
@@ -28,7 +31,13 @@ public class InventoryController : MonoBehaviour
     {
         if (inputManager.OpenInventory())
         {
-            uiManager.SetUI(UIManager.state.Inventory);
+            uiManager.SetUI(!isOtherInventory ? UIManager.state.Inventory : UIManager.state.OtherInventory);
+
+            if (isOtherInventory)
+            {
+                otherVM.AddItemFormList();
+            }
+
             inputManager.EnableUIInput(true);
         }
 
@@ -36,6 +45,11 @@ public class InventoryController : MonoBehaviour
         {
             uiManager.SetUI(UIManager.state.None);
             inputManager.EnableUIInput(false);
+
+            if (isOtherInventory)
+            {
+                otherVM.AddItemFormList();
+            }
         }
     }
 
@@ -45,6 +59,8 @@ public class InventoryController : MonoBehaviour
         InventoryEvent.OnDropItem += HandleDropItem;
         InventoryEvent.OnCanPlace += HandleCanPlace;
         InventoryEvent.OnRemoveItem += HandleRemoveItem;
+        InventoryEvent.OnInitOtherInventory += HandleInitOtherInventory;
+        InventoryEvent.OnDestroyOtherInventory += HandleDestroyOtherInventory;
     }
 
     void OnDisable()
@@ -53,55 +69,85 @@ public class InventoryController : MonoBehaviour
         InventoryEvent.OnDropItem -= HandleDropItem;
         InventoryEvent.OnCanPlace -= HandleCanPlace;
         InventoryEvent.OnRemoveItem -= HandleRemoveItem;
+        InventoryEvent.OnInitOtherInventory -= HandleInitOtherInventory;
+        InventoryEvent.OnDestroyOtherInventory -= HandleDestroyOtherInventory;
     }
 
     public void Init(InventoryData playerInventory)
     {
         playerVM = new InventoryViewModel(playerInventory);
-        playerUI.Bind(inventoryPlayerFrame, playerVM);
+        playerUI.Bind(inventoryPlayerFrame, playerVM, true);
     }
 
-    public void OpenPlayerChest(InventoryData otherSystem)
+    public void InitOtherInventory(InventoryData otherSystem)
     {
         otherVM = new InventoryViewModel(otherSystem);
-        otherUI.Bind(inventoryOtherFrame, otherVM);
+        otherUI.Bind(inventoryOtherFrame, otherVM, false);
     }
 
     public void AddItemToPlayer(ItemData itemData)
     {
-        Vector2 place = playerVM.FindPlaceForItem(itemData);
-        if (place == Vector2.negativeInfinity)
-            return;
-
-        if (playerVM.CanPlace(itemData, (int)place.x, (int)place.y))
-        {
-            playerVM.AddItem(itemData, (int)place.x, (int)place.y);
-            playerUI.InitItem(itemData, (int)place.x, (int)place.y);
-        }
+        playerVM.AddItem(itemData);
     }
 
     void HandlePickItem(ItemUI item)
     {
-        playerVM.RemoveItem(item.itemData, item.originalX, item.originalY);
+        if (item.isBelongPlayer)
+        {
+            playerVM.RemoveItem(item.itemData, item.originalX, item.originalY);
+        }
+        else
+        {
+            otherVM.RemoveItem(item.itemData, item.originalX, item.originalY);
+        }
+
         playerUI.SetRaycast(false);
         otherUI.SetRaycast(false);
     }
 
     void HandleDropItem(ItemUI item, DropSlot dropSlot)
     {
-        playerVM.AddItem(item.itemData, dropSlot.x, dropSlot.y);
+        if (dropSlot.isBelongPlayer)
+        {
+            playerVM.PlaceItem(item.itemData, dropSlot.x, dropSlot.y);
+            playerUI.SetParent(item.GetComponent<RectTransform>());
+        }
+        else
+        {
+            otherVM.PlaceItem(item.itemData, dropSlot.x, dropSlot.y);
+            otherUI.SetParent(item.GetComponent<RectTransform>());
+        }
+
+        item.isBelongPlayer = dropSlot.isBelongPlayer;
         playerUI.SetRaycast(true);
         otherUI.SetRaycast(true);
     }
 
     bool HandleCanPlace(ItemUI item, DropSlot dropSlot)
     {
-        return playerVM.CanPlace(item.itemData, dropSlot.x, dropSlot.y);
+        return dropSlot.isBelongPlayer ?
+        playerVM.CanPlace(item.itemData, dropSlot.x, dropSlot.y) :
+        otherVM.CanPlace(item.itemData, dropSlot.x, dropSlot.y);
     }
 
     void HandleRemoveItem()
     {
         playerUI.SetRaycast(true);
         otherUI.SetRaycast(true);
+    }
+
+    void HandleInitOtherInventory(InventoryData inventory)
+    {
+        InitOtherInventory(inventory);
+        isOtherInventory = true;
+    }
+
+    void HandleDestroyOtherInventory()
+    {
+        isOtherInventory = false;
+        otherUI.UnBind();
+        otherVM.Dispose();
+
+        otherVM = null;
     }
 }

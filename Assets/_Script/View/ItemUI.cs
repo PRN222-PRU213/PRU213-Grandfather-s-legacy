@@ -7,15 +7,16 @@ public class ItemUI : MonoBehaviour
 
     public int originalX = 0;
     public int originalY = 0;
-    public InventoryUI OwnerInventoryUI;
+
+    public bool isBelongPlayer;
 
     [Header("Data")]
     public ItemData itemData;
 
-    public void Init(ItemData data, InventoryUI ownerInventoryUI)
+    public void Init(ItemData data, bool isBelongPlayer)
     {
         itemData = data;
-        OwnerInventoryUI = ownerInventoryUI;
+        this.isBelongPlayer = isBelongPlayer;
 
         Image iconImage = GetComponent<Image>();
         iconImage.sprite = itemData.icon;
@@ -41,15 +42,8 @@ public class ItemUI : MonoBehaviour
         Destroy(gameObject);
     }
 
-    public void SetOccupied(bool occupied)
-    {
-        Image iconImage = GetComponent<Image>();
-        iconImage.color = occupied ? Color.red : Color.white;
-    }
-
     public void SnapToSlot(DropSlot slot)
     {
-        RectTransform itemRect = GetComponent<RectTransform>();
         RectTransform slotRect = slot.GetComponent<RectTransform>();
         transform.position = slotRect.position;
         originalPosition = transform.position;
@@ -62,6 +56,4 @@ public class ItemUI : MonoBehaviour
         transform.position = originalPosition;
     }
 
-    public int Width => itemData.itemShape.width;
-    public int Height => itemData.itemShape.height;
 }

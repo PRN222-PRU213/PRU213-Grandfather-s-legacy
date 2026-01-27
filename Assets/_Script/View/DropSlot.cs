@@ -8,9 +8,11 @@ public class DropSlot : MonoBehaviour, IPointerDownHandler
     public int x;
     public int y;
     public bool isOccupied = false;
+    public bool isBelongPlayer;
 
-    public void Init(int x, int y)
+    public void Init(bool isBelongPlayer, int x, int y)
     {
+        this.isBelongPlayer = isBelongPlayer;
         this.x = x;
         this.y = y;
     }

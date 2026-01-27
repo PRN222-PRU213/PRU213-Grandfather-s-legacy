@@ -13,6 +13,8 @@ public class InventoryUI : MonoBehaviour
     private GridLayoutGroup gridLayoutGroup;
     private RectTransform itemFrame;
 
+    private Dictionary<Vector2, ItemUI> listItem;
+
     private List<DropSlot> listSlot = new List<DropSlot>();
 
     [Header("Prefab")]
@@ -22,22 +24,54 @@ public class InventoryUI : MonoBehaviour
     [SerializeField] private GameObject blockerPrefab;
     [SerializeField] private GameObject itemUIPrefab;
 
-    public void Bind(Transform parent, InventoryViewModel vm)
+    public void Bind(Transform parent, InventoryViewModel vm, bool isPlayer)
     {
         this.vm = vm;
         vm.OnCellChanged += OnCellChange;
+        vm.OnAddItem += OnAddItem;
+        vm.OnRemoveItem += OnRemoveItem;
 
-        Refresh(parent);
+        Refresh(parent, isPlayer);
     }
 
-    void Refresh(Transform parent)
+    public void UnBind()
     {
+        vm.OnCellChanged -= OnCellChange;
+        vm.OnAddItem -= OnAddItem;
+        vm.OnRemoveItem -= OnRemoveItem;
+        vm = null;
+
+        Clear();
+    }
+
+    void Refresh(Transform parent, bool isPlayer)
+    {
+        listItem = new Dictionary<Vector2, ItemUI>();
         slotFrame = Instantiate(slotFramePrefab, parent).GetComponent<RectTransform>();
         gridLayoutGroup = slotFrame.GetComponent<GridLayoutGroup>();
         itemFrame = Instantiate(itemFramePrefab, parent).GetComponent<RectTransform>();
         Vector2 gridSize = vm.GetGridSize();
         ResizeFrame(gridSize);
-        InitSlots(gridSize);
+        InitSlots(gridSize, isPlayer);
+    }
+
+    void Clear()
+    {
+        // Destroy slot frame
+        if (slotFrame != null)
+        {
+            Destroy(slotFrame.gameObject);
+            slotFrame = null;
+        }
+
+        // Destroy item frame
+        if (itemFrame != null)
+        {
+            Destroy(itemFrame.gameObject);
+            itemFrame = null;
+        }
+
+        gridLayoutGroup = null;
     }
 
     void ResizeFrame(Vector2 gridSize)
@@ -51,7 +85,7 @@ public class InventoryUI : MonoBehaviour
         itemFrame.sizeDelta = new Vector2(width, height);
     }
 
-    void InitSlots(Vector2 gridSize)
+    void InitSlots(Vector2 gridSize, bool isBelongPlayer)
     {
         for (int y = 0; y < gridSize.y; y++)
         {
@@ -59,25 +93,12 @@ public class InventoryUI : MonoBehaviour
             {
                 GameObject slot = Instantiate(itemSlotPrefab, slotFrame);
                 slot.name = "ItemSlot_" + x + "_" + y;
-                slot.GetComponent<DropSlot>().Init(x, y);
+                slot.GetComponent<DropSlot>().Init(isBelongPlayer, x, y);
                 slot.GetComponent<DropSlot>().uiController = uiController;
 
                 listSlot.Add(slot.GetComponent<DropSlot>());
             }
         }
-    }
-
-    public void InitItem(ItemData item, int x, int y)
-    {
-        GameObject itemObject = Instantiate(itemUIPrefab, itemFrame);
-        ItemUI itemUI = itemObject.GetComponent<ItemUI>();
-
-        DragItem dragItem = itemObject.GetComponent<DragItem>();
-        dragItem.uiController = uiController;
-
-        itemUI.Init(item, this);
-        itemUI.Resize(gridLayoutGroup.cellSize.x);
-        itemUI.SnapToSlot(GetSlot(x, y));
     }
 
     public DropSlot GetSlot(int x, int y)
@@ -111,59 +132,45 @@ public class InventoryUI : MonoBehaviour
         return !itemFrame.rect.Contains(localPos);
     }
 
+    public void SetParent(RectTransform item)
+    {
+        item.SetParent(itemFrame, false);
+    }
+
     void OnCellChange(int x, int y)
     {
         var slot = GetSlot(x, y);
         slot.SetOccupied(!slot.isOccupied);
     }
 
-    // public Vector2 GetGridSize()
-    // {
-    //     float numberSlotX = math.floor(slotFrame.rect.width / gridLayoutGroup.cellSize.x);
-    //     float numberSlotY = math.floor(slotFrame.rect.height / gridLayoutGroup.cellSize.y);
+    void OnAddItem(ItemData item, int x, int y, bool isBelongPlayer)
+    {
+        GameObject itemObject = Instantiate(itemUIPrefab, itemFrame);
+        ItemUI itemUI = itemObject.GetComponent<ItemUI>();
 
-    //     return new Vector2(numberSlotX, numberSlotY);
-    // }
+        DragItem dragItem = itemObject.GetComponent<DragItem>();
+        dragItem.uiController = uiController;
 
-    // public DropSlot InitSlot(int x, int y, bool isBlocker)
-    // {
-    //     if (!isBlocker)
-    //     {
-    //         GameObject slot = Instantiate(itemSlotPrefab, slotFrame);
-    //         slot.name = "ItemSlot_" + x + "_" + y;
-    //         slot.GetComponent<DropSlot>().Init(x, y);
-    //         slot.GetComponent<DropSlot>().vm = vm;
-    //         return slot.GetComponent<DropSlot>();
-    //     }
-    //     else
-    //     {
-    //         GameObject blocker = Instantiate(blockerPrefab, slotFrame);
-    //         blocker.name = "Blocker_" + x + "_" + y;
-    //         return null;
-    //     }
-    // }
+        itemUI.Init(item, isBelongPlayer);
+        itemUI.Resize(gridLayoutGroup.cellSize.x);
+        listItem.Add(new Vector2(x, y), itemUI);
 
-    // public void SetMoney(int amount)
-    // {
-    //     moneyLabel.text = $"${amount}";
-    // }
+        LayoutRebuilder.ForceRebuildLayoutImmediate(slotFrame);
+        LayoutRebuilder.ForceRebuildLayoutImmediate(itemFrame);
 
-    // public void SetCapacity(int containing, int capacity)
-    // {
-    //     capacityLabel.text = $"{containing}/{capacity}";
-    // }
+        var slot = GetSlot(x, y);
 
-    // public ItemUI InitItem(ItemData item)
-    // {
-    //     GameObject itemObject = Instantiate(itemUIPrefab, itemFrame);
-    //     ItemUI itemUI = itemObject.GetComponent<ItemUI>();
+        itemUI.SnapToSlot(slot);
+    }
 
-    //     DragItem dragItem = itemObject.GetComponent<DragItem>();
-    //     dragItem.vm = vm;
+    void OnRemoveItem(int x, int y)
+    {
+        Vector2 posSlot = new Vector2(x, y);
 
-    //     itemUI.Init(item);
-    //     itemUI.Resize(gridLayoutGroup.cellSize.x);
+        if (listItem.Count <= 0 || !listItem.ContainsKey(posSlot)) return;
 
-    //     return itemUI;
-    // }
+        ItemUI itemUI = listItem[posSlot];
+        itemUI.Remove();
+        listItem.Remove(posSlot);
+    }
 }

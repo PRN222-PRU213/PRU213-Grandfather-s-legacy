@@ -78,7 +78,7 @@ public class FishingSystem : MonoBehaviour
 
     public void EndFishing(ItemData item)
     {
-        cameraManager.ExitFishingView();
+        cameraManager.ExitView();
         fishingManager.InitMatch();
         inventoryController.AddItemToPlayer(item);
     }

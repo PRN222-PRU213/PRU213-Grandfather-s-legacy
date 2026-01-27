@@ -5,7 +5,7 @@ public class UIManager : Singleton<UIManager>
     [Header("UI")]
     [SerializeField] private GameObject InventoryUI;
     [SerializeField] private GameObject FishingUI;
-    [SerializeField] private GameObject StoreUI;
+    [SerializeField] private GameObject OtherInventoryUI;
     [SerializeField] private GameObject TalkUI;
 
     public enum state
@@ -13,7 +13,7 @@ public class UIManager : Singleton<UIManager>
         None,
         Inventory,
         Fishing,
-        Sale,
+        OtherInventory,
         Talk
     }
 
@@ -28,31 +28,31 @@ public class UIManager : Singleton<UIManager>
             case state.None:
                 SetInventoryUI(false);
                 SetFishingUI(false);
-                SetSaleUI(false);
+                SetOtherInventoryUI(false);
                 SetTalkUI(false);
                 break;
             case state.Inventory:
                 SetInventoryUI(true);
                 SetFishingUI(false);
-                SetSaleUI(false);
+                SetOtherInventoryUI(false);
                 SetTalkUI(false);
                 break;
             case state.Fishing:
                 SetInventoryUI(true);
                 SetFishingUI(true);
-                SetSaleUI(false);
+                SetOtherInventoryUI(false);
                 SetTalkUI(false);
                 break;
-            case state.Sale:
-                SetInventoryUI(false);
+            case state.OtherInventory:
+                SetInventoryUI(true);
                 SetFishingUI(false);
-                SetSaleUI(true);
+                SetOtherInventoryUI(true);
                 SetTalkUI(false);
                 break;
             case state.Talk:
                 SetInventoryUI(false);
                 SetFishingUI(false);
-                SetSaleUI(false);
+                SetOtherInventoryUI(false);
                 SetTalkUI(true);
                 break;
         }
@@ -68,9 +68,9 @@ public class UIManager : Singleton<UIManager>
         FishingUI.SetActive(value);
     }
 
-    public void SetSaleUI(bool value)
+    public void SetOtherInventoryUI(bool value)
     {
-        // SaleUI.SetActive(value);
+        OtherInventoryUI.SetActive(value);
     }
 
     public void SetTalkUI(bool value)

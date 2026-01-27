@@ -3,7 +3,8 @@ using UnityEngine.InputSystem;
 
 public class UIController : MonoBehaviour
 {
-    [SerializeField] private InputManager inputManager;
+    private InputManager inputManager;
+    [SerializeField] private Transform ItemDragCanvas;
     public bool isHoldingItem = false;
     public ItemUI itemHolding;
     private Vector2 offset;
@@ -29,7 +30,8 @@ public class UIController : MonoBehaviour
     {
         itemHolding = item;
         RectTransform rt = item.GetComponent<RectTransform>();
-        offset = new Vector2(rt.rect.width / 4, -rt.rect.height / 4);
+        offset = new Vector2(rt.rect.width / 8, -rt.rect.height / 8);
+        rt.SetParent(ItemDragCanvas, false);
 
         InventoryEvent.OnPickItem?.Invoke(itemHolding);
         isHoldingItem = true;

@@ -1,4 +1,5 @@
 using System.Collections.Generic;
+using Unity.VisualScripting;
 using UnityEngine;
 
 [System.Serializable]
@@ -14,5 +15,10 @@ public class InventoryData
         this.row = row;
         this.column = column;
         cells = new int[column, row];
+    }
+
+    public void AddListItem(InventoryItemData item)
+    {
+        items.Add(item);
     }
 }

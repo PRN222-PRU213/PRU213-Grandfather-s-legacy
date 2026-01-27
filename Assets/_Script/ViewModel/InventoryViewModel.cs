@@ -1,49 +1,95 @@
+using System.Collections;
+using System.Collections.Generic;
 using UnityEngine;
 
 public class InventoryViewModel
 {
-    private InventoryGrid model;
+    private InventoryModel model;
     private InventoryData data;
 
-    public event System.Action<int, int> OnCellChanged
-    {
-        add { model.OnCellChanged += value; }
-        remove { model.OnCellChanged -= value; }
-    }
+    public event System.Action<int, int> OnCellChanged;
+    public event System.Action<ItemData, int, int, bool> OnAddItem;
+    public event System.Action<ItemData, int, int> OnPlaceItem;
+    public event System.Action<int, int> OnRemoveItem;
 
     public InventoryViewModel(InventoryData data)
     {
         this.data = data;
-        model = new InventoryGrid(new Vector2(data.column, data.row));
+        model = new InventoryModel(new Vector2(data.column, data.row));
     }
 
-    public void AddItem(ItemData itemData, int x, int y)
+    public void Dispose()
     {
-        var item = new InventoryItemData
-        {
-            itemData = itemData,
-            position = new Vector2Int(x, y)
-        };
+        OnCellChanged = null;
+        OnAddItem = null;
+        OnPlaceItem = null;
+    }
+
+    public void PlaceItem(ItemData itemData, int x, int y)
+    {
+        var item = new InventoryItemData(itemData, new Vector2Int(x, y));
         data.items.Add(item);
 
-        model.SetOccupiedSlot(itemData, x, y, true);
+        SetOccupiedSlot(itemData, x, y, true);
+        OnPlaceItem?.Invoke(itemData, x, y);
     }
 
     public void RemoveItem(ItemData itemData, int x, int y)
     {
         var item = data.items.Find(i => i.position == new Vector2(x, y));
-        model.SetOccupiedSlot(itemData, item.position.x, item.position.y, false);
+        SetOccupiedSlot(itemData, item.position.x, item.position.y, false);
         data.items.Remove(item);
     }
 
-    public bool CanPlace(ItemData itemData, int x, int y)
+    public bool CanPlace(ItemData itemData, int startX, int startY)
     {
-        return model.CanPlace(itemData, x, y);
+        var shape = itemData.itemShape;
+
+        for (int y = 0; y < shape.height; y++)
+        {
+            for (int x = 0; x < shape.width; x++)
+            {
+                if (!shape.Occupies(x, y))
+                    continue;
+
+                int gx = startX + x;
+                int gy = startY + y;
+
+                if (!model.IsInBounds(gx, gy))
+                    return false;
+
+                if (IsOccupied(gx, gy))
+                    return false;
+            }
+        }
+        return true;
     }
 
     public Vector2 GetGridSize()
     {
         return new Vector2(data.column, data.row);
+    }
+
+    public void AddItem(ItemData itemData)
+    {
+        Vector2 place = FindPlaceForItem(itemData);
+        if (place == Vector2.negativeInfinity)
+            return;
+
+        PlaceItem(itemData, (int)place.x, (int)place.y);
+        OnAddItem?.Invoke(itemData, (int)place.x, (int)place.y, true);
+    }
+
+    public void AddItemFormList()
+    {
+        var listItem = data.items;
+        foreach (InventoryItemData item in listItem)
+        {
+            OnRemoveItem?.Invoke(item.position.x, item.position.y);
+
+            SetOccupiedSlot(item.itemData, item.position.x, item.position.y, true);
+            OnAddItem?.Invoke(item.itemData, item.position.x, item.position.y, false);
+        }
     }
 
     public Vector2 FindPlaceForItem(ItemData itemData)
@@ -52,12 +98,39 @@ public class InventoryViewModel
         {
             for (int x = 0; x <= data.column - itemData.itemShape.width; x++)
             {
-                if (model.CanPlace(itemData, x, y))
+                if (CanPlace(itemData, x, y))
                 {
                     return new Vector2(x, y);
                 }
             }
         }
         return Vector2.negativeInfinity;
+    }
+
+    //===========================PRIVATE========================================
+    void SetOccupiedSlot(ItemData item, int startX, int startY, bool isPlace)
+    {
+        var shape = item.itemShape;
+
+        for (int y = 0; y < shape.height; y++)
+        {
+            for (int x = 0; x < shape.width; x++)
+            {
+                if (!shape.Occupies(x, y))
+                    continue;
+
+                int gx = startX + x;
+                int gy = startY + y;
+
+                OnCellChanged?.Invoke(gx, gy);
+
+                model.SetCell(gx, gy, isPlace);
+            }
+        }
+    }
+
+    bool IsOccupied(int x, int y)
+    {
+        return model.GetCell(x, y);
     }
 }

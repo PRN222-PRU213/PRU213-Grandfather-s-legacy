@@ -5,8 +5,8 @@ public class FishZoneController : MonoBehaviour
     [SerializeField] private FishingSystem fishingSystem;
 
     [Header("Zone Settings")]
-    public bool isActive = true;          // Zone có đang hoạt động không
-    public ParticleSystem zoneVisual;         // Hiệu ứng vùng cá (vòng tròn nước, particle,...)
+    public bool isActive = true;
+    public ParticleSystem zoneVisual;
     public bool ditectedPlayer = false;
     public ItemData item;
 

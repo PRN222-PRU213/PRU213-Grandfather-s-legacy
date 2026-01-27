@@ -7,6 +7,7 @@ public class CameraManager : Singleton<CameraManager>
     [SerializeField] private CinemachineCamera normalCamera;
     [SerializeField] private CinemachineCamera fishingCamera;
     [SerializeField] private CinemachineCamera defaultCamera;
+    [SerializeField] private CinemachineCamera islandCamera;
 
     private CinemachineBrain brain;
 
@@ -26,7 +27,13 @@ public class CameraManager : Singleton<CameraManager>
         defaultCamera.Priority = 0;
     }
 
-    public void ExitFishingView()
+    public void EnterIslandView()
+    {
+        islandCamera.Priority = 20;
+        defaultCamera.Priority = 0;
+    }
+
+    public void ExitView()
     {
         SetNormalView();
     }
@@ -37,5 +44,6 @@ public class CameraManager : Singleton<CameraManager>
     {
         defaultCamera.Priority = 20;
         fishingCamera.Priority = 0;
+        islandCamera.Priority = 0;
     }
 }
