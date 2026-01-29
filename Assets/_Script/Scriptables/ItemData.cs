@@ -26,7 +26,18 @@ public class ItemData : ScriptableObject
     public float MAX_VALUE;
 
     [Header("Type")]
+    public FishType fishType;
     public ItemType itemType;
+    public MinigameType minigameType;
+}
+
+public enum FishType
+{
+    Coastal,
+    Shallow,
+    Oceanic,
+    Mangrove,
+    Depth
 }
 
 public enum ItemType
@@ -35,4 +46,10 @@ public enum ItemType
     Equipment,
     Quest,
     Material
+}
+
+public enum MinigameType
+{
+    TimingBar,
+    none
 }

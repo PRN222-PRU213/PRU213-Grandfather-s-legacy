@@ -45,11 +45,6 @@ public class InventoryController : MonoBehaviour
         {
             uiManager.SetUI(UIManager.state.None);
             inputManager.EnableUIInput(false);
-
-            if (isOtherInventory)
-            {
-                otherVM.AddItemFormList();
-            }
         }
     }
 
@@ -61,6 +56,7 @@ public class InventoryController : MonoBehaviour
         InventoryEvent.OnRemoveItem += HandleRemoveItem;
         InventoryEvent.OnInitOtherInventory += HandleInitOtherInventory;
         InventoryEvent.OnDestroyOtherInventory += HandleDestroyOtherInventory;
+        InventoryEvent.OnAddItem += HandleAddItem;
     }
 
     void OnDisable()
@@ -71,6 +67,7 @@ public class InventoryController : MonoBehaviour
         InventoryEvent.OnRemoveItem -= HandleRemoveItem;
         InventoryEvent.OnInitOtherInventory -= HandleInitOtherInventory;
         InventoryEvent.OnDestroyOtherInventory -= HandleDestroyOtherInventory;
+        InventoryEvent.OnAddItem -= HandleAddItem;
     }
 
     public void Init(InventoryData playerInventory)
@@ -83,11 +80,6 @@ public class InventoryController : MonoBehaviour
     {
         otherVM = new InventoryViewModel(otherSystem);
         otherUI.Bind(inventoryOtherFrame, otherVM, false);
-    }
-
-    public void AddItemToPlayer(ItemData itemData)
-    {
-        playerVM.AddItem(itemData);
     }
 
     void HandlePickItem(ItemUI item)
@@ -149,5 +141,10 @@ public class InventoryController : MonoBehaviour
         otherVM.Dispose();
 
         otherVM = null;
+    }
+
+    void HandleAddItem(ItemData item)
+    {
+        playerVM.AddItem(item);
     }
 }

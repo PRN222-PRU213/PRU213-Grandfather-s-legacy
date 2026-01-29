@@ -11,4 +11,5 @@ public static class InventoryEvent
     public static Action OnDestroyOtherInventory;
 
     public static Func<ItemUI, DropSlot, bool> OnCanPlace;
+    public static Action<ItemData> OnAddItem;
 }

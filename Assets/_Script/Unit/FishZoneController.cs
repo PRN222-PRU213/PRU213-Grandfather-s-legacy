@@ -2,8 +2,6 @@ using UnityEngine;
 
 public class FishZoneController : MonoBehaviour
 {
-    [SerializeField] private FishingSystem fishingSystem;
-
     [Header("Zone Settings")]
     public bool isActive = true;
     public ParticleSystem zoneVisual;
@@ -20,7 +18,7 @@ public class FishZoneController : MonoBehaviour
         if (!other.CompareTag("Player")) return;
 
         // Báo cho hệ thống câu cá
-        fishingSystem.SetCanFish(true, item);
+        FishingEvent.OnEnableFishing?.Invoke(item);
         ditectedPlayer = true;
     }
 
@@ -29,7 +27,7 @@ public class FishZoneController : MonoBehaviour
         if (!isActive) return;
         if (!other.CompareTag("Player")) return;
 
-        fishingSystem.SetCanFish(false, null);
+        FishingEvent.OnUnableFishing?.Invoke();
         ditectedPlayer = false;
     }
 
