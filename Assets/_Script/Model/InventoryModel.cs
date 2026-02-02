@@ -4,6 +4,7 @@ public class InventoryModel
 {
     private bool[,] itemGrid;
 
+    public bool wasOpen = false;
     public bool GetCell(int x, int y) => itemGrid[x, y];
     public void SetCell(int x, int y, bool value) => itemGrid[x, y] = value;
 

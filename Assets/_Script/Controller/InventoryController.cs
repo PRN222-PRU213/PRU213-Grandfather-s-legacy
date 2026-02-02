@@ -1,11 +1,12 @@
+using NUnit.Framework.Internal.Filters;
 using UnityEngine;
 
 public class InventoryController : MonoBehaviour
 {
     [SerializeField] RectTransform inventoryPlayerFrame;
     [SerializeField] RectTransform inventoryOtherFrame;
-    [SerializeField] InventoryUI playerUI;
-    [SerializeField] InventoryUI otherUI;
+    [SerializeField] InventoryView playerUI;
+    [SerializeField] InventoryView otherUI;
 
     [SerializeField] private UIManager uiManager;
     [SerializeField] private InputManager inputManager;

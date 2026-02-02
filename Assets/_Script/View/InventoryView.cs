@@ -2,7 +2,7 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
 
-public class InventoryUI : MonoBehaviour
+public class InventoryView : MonoBehaviour
 {
     [Header("References")]
     private InventoryViewModel vm;
@@ -30,6 +30,7 @@ public class InventoryUI : MonoBehaviour
         vm.OnCellChanged += OnCellChange;
         vm.OnAddItem += OnAddItem;
         vm.OnRemoveItem += OnRemoveItem;
+        vm.OnDestroyItem += OnDestroyItem;
 
         Refresh(parent, isPlayer);
     }
@@ -39,6 +40,7 @@ public class InventoryUI : MonoBehaviour
         vm.OnCellChanged -= OnCellChange;
         vm.OnAddItem -= OnAddItem;
         vm.OnRemoveItem -= OnRemoveItem;
+        vm.OnDestroyItem -= OnDestroyItem;
         vm = null;
 
         Clear();
@@ -156,14 +158,29 @@ public class InventoryUI : MonoBehaviour
         listItem.Add(new Vector2(x, y), itemUI);
 
         LayoutRebuilder.ForceRebuildLayoutImmediate(slotFrame);
-        LayoutRebuilder.ForceRebuildLayoutImmediate(itemFrame);
 
         var slot = GetSlot(x, y);
 
         itemUI.SnapToSlot(slot);
     }
 
+    void OnPlaceItem(ItemData itemData, int x, int y)
+    {
+        Vector2 posSlot = new Vector2(x, y);
+
+        if (listItem.Count <= 0 || !listItem.ContainsKey(posSlot)) return;
+
+    }
+
     void OnRemoveItem(int x, int y)
+    {
+        Vector2 posSlot = new Vector2(x, y);
+
+        if (listItem.Count <= 0 || !listItem.ContainsKey(posSlot)) return;
+        listItem.Remove(posSlot);
+    }
+
+    void OnDestroyItem(int x, int y)
     {
         Vector2 posSlot = new Vector2(x, y);
 

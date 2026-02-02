@@ -9,6 +9,7 @@ public class InventoryViewModel
     public event System.Action<ItemData, int, int, bool> OnAddItem;
     public event System.Action<ItemData, int, int> OnPlaceItem;
     public event System.Action<int, int> OnRemoveItem;
+    public event System.Action<int, int> OnDestroyItem;
 
     public InventoryViewModel(InventoryData data)
     {
@@ -29,7 +30,7 @@ public class InventoryViewModel
         data.items.Add(item);
 
         SetOccupiedSlot(itemData, x, y, true);
-        OnPlaceItem?.Invoke(itemData, x, y);
+
     }
 
     public void RemoveItem(ItemData itemData, int x, int y)
@@ -37,6 +38,7 @@ public class InventoryViewModel
         var item = data.items.Find(i => i.position == new Vector2(x, y));
         SetOccupiedSlot(itemData, item.position.x, item.position.y, false);
         data.items.Remove(item);
+        OnRemoveItem?.Invoke(x, y);
     }
 
     public bool CanPlace(ItemData itemData, int startX, int startY)
@@ -80,17 +82,25 @@ public class InventoryViewModel
 
     public void AddItemFormList()
     {
+        if (model.wasOpen) return;
+
+        model.wasOpen = true;
         var listItem = data.items;
         foreach (InventoryItemData item in listItem)
         {
-            OnRemoveItem?.Invoke(item.position.x, item.position.y);
-
             SetOccupiedSlot(item.itemData, item.position.x, item.position.y, true);
             OnAddItem?.Invoke(item.itemData, item.position.x, item.position.y, false);
         }
     }
 
-    public Vector2 FindPlaceForItem(ItemData itemData)
+    public void RemoveItemFormList()
+    {
+
+    }
+
+    //===========================PRIVATE========================================
+
+    Vector2 FindPlaceForItem(ItemData itemData)
     {
         for (int y = 0; y <= data.row - itemData.itemShape.height; y++)
         {
@@ -105,7 +115,6 @@ public class InventoryViewModel
         return Vector2.negativeInfinity;
     }
 
-    //===========================PRIVATE========================================
     void SetOccupiedSlot(ItemData item, int startX, int startY, bool isPlace)
     {
         var shape = item.itemShape;
