@@ -23,9 +23,9 @@ public class InteractionController : MonoBehaviour
     {
         if (currentInteractable != null)
         {
-            Debug.Log("fishing");
             if (currentInteractable.CanInteract())
             {
+                InputManager.Instance.EnableUIInput(true);
                 currentInteractable.Interact(gameObject);
             }
         }

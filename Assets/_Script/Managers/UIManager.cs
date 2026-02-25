@@ -28,6 +28,10 @@ public class UIManager : Singleton<UIManager>
     {
         InputEvent.OnOpenInventoryPressed += OnOpenInventory;
         InputEvent.OnCloseInventoryPressed += OnClose;
+
+        StoryEvent.OnStartDialogue += OnOpenTalk;
+        StoryEvent.OnEndDialogue += OnClose;
+
         FishingEvent.OnEnableFishing += OnOpenFishing;
         InventoryEvent.OnInitOtherInventory += OnOpenOtherInventory;
     }
@@ -45,10 +49,16 @@ public class UIManager : Singleton<UIManager>
         isEnable = true;
     }
 
-    void OnOpenOtherInventory(InventoryData inventory)
+    public void OnOpenOtherInventory(InventoryData inventory)
     {
         SetOtherInventoryUI(true);
         SetInventoryUI(true);
+        isEnable = true;
+    }
+
+    public void OnOpenTalk(NPCData data, StoryDatabase database)
+    {
+        SetTalkUI(true);
         isEnable = true;
     }
 
@@ -56,6 +66,7 @@ public class UIManager : Singleton<UIManager>
     {
         SetInventoryUI(false);
         SetFishingUI(false);
+        SetTalkUI(false);
         SetOtherInventoryUI(false);
     }
 
@@ -113,6 +124,6 @@ public class UIManager : Singleton<UIManager>
 
     public void SetTalkUI(bool value)
     {
-        // TalkUI.SetActive(value);
+        TalkUI.SetActive(value);
     }
 }

@@ -3,24 +3,24 @@ using System.Collections.Generic;
 [System.Serializable]
 public class ProgressionData
 {
-    public List<QuestProgress> activeQuests;
-    public List<string> completedQuests;
-    public List<string> unlockedAreas;
-    public List<string> discoveredSpecies;
-    public List<string> viewedDialogues;
-    public Dictionary<string, int> npcRelationships;
+    // ── QUEST ──────────────────────────────────────────
+    public List<QuestProgress> activeQuests = new List<QuestProgress>();
+    public List<string> completedQuests = new List<string>();
+
+    // ── WORLD ──────────────────────────────────────────
+    public List<string> unlockedAreas = new List<string>();
+    public List<string> discoveredSpecies = new List<string>();
+    public List<string> viewedDialogues = new List<string>();
+
+    // ── NPC ────────────────────────────────────────────
+    public Dictionary<string, int> npcRelationships = new Dictionary<string, int>();
+
+    // ── MISC ───────────────────────────────────────────
     public int encyclopediaEntries;
     public string currentMainQuestID;
 
-    public ProgressionData()
-    {
-        activeQuests = new List<QuestProgress>();
-        completedQuests = new List<string>();
-        unlockedAreas = new List<string>();
-        discoveredSpecies = new List<string>();
-        viewedDialogues = new List<string>();
-        npcRelationships = new Dictionary<string, int>();
-    }
+    // ── WORLD STATE ────────────────────────────────────
+    public WorldStateSaveData worldStateSaveData = new WorldStateSaveData();
 }
 
 [System.Serializable]

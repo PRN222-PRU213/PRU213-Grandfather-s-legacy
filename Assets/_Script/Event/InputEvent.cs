@@ -17,6 +17,7 @@ public static class InputEvent
     public static event Action OnCloseInventoryPressed;
     public static event Action OnRotateItemPressed;
     public static event Action OnRemoveItemPressed;
+    public static event Action OnRightClickPressed;
 
 
     internal static void TriggerMove(Vector2 movement) => OnMove?.Invoke(movement);
@@ -25,7 +26,7 @@ public static class InputEvent
     internal static void TriggerInteract()
     {
         OnInteractPressed?.Invoke();
-        OnOpenInventoryPressed?.Invoke();
+        // OnOpenInventoryPressed?.Invoke();
     }
     internal static void TriggerCatchFish() => OnCatchFishPressed?.Invoke();
     internal static void TriggerOpenInventory() => OnOpenInventoryPressed?.Invoke();
@@ -36,4 +37,5 @@ public static class InputEvent
     }
     internal static void TriggerRotateItem() => OnRotateItemPressed?.Invoke();
     internal static void TriggerRemoveItem() => OnRemoveItemPressed?.Invoke();
+    internal static void TriggerRightClick() => OnRightClickPressed?.Invoke();
 }

@@ -17,6 +17,7 @@ public class InputManager : Singleton<InputManager>
     private InputAction m_CloseInventoryAction;
     private InputAction m_RotateItemAction;
     private InputAction m_RemoveItemAction;
+    private InputAction m_RightClickAction;
 
     // ================= Public Properties =================
     public InputActionAsset inputActions;
@@ -65,6 +66,7 @@ public class InputManager : Singleton<InputManager>
         m_CloseInventoryAction = InputSystem.actions.FindAction("CloseInventory");
         m_RotateItemAction = InputSystem.actions.FindAction("RotateItem");
         m_RemoveItemAction = InputSystem.actions.FindAction("RemoveItem");
+        m_RightClickAction = InputSystem.actions.FindAction("RightClick");
     }
 
     void SubscribeToInputSystem()
@@ -83,6 +85,7 @@ public class InputManager : Singleton<InputManager>
         m_CloseInventoryAction.performed += ctx => InputEvent.TriggerCloseInventory();
         m_RotateItemAction.performed += ctx => InputEvent.TriggerRotateItem();
         m_RemoveItemAction.performed += ctx => InputEvent.TriggerRemoveItem();
+        m_RightClickAction.performed += ctx => InputEvent.TriggerRightClick();
     }
 
     // ================= Subsystem =========================
