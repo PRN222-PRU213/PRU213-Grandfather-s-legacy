@@ -15,6 +15,7 @@ public class TimingBarViewModel : IFishingMinigame
     public event Action OnStart;
     public event Action<bool> OnHandle;
     public event Action OnFinish;
+    public event Action OnRestart;
 
     public TimingBarViewModel(ItemData item, float difficultyMultiplier)
     {
@@ -22,6 +23,11 @@ public class TimingBarViewModel : IFishingMinigame
         this.difficultyMultiplier = difficultyMultiplier;
         award = item;
 
+        SetRounds();
+    }
+
+    public void SetRounds()
+    {
         totalRounds = GetTotalRounds();
         currentRound = 0;
     }
@@ -45,6 +51,12 @@ public class TimingBarViewModel : IFishingMinigame
             return true;
         }
         return false;
+    }
+
+    public void Restart()
+    {
+        SetRounds();
+        OnRestart?.Invoke();
     }
 
     float GetTrackSpeed()

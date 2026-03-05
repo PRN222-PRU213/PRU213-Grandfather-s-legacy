@@ -47,14 +47,11 @@ public class LightingManager : MonoBehaviour
 
     private void Update()
     {
-        if (timeOfDay == 0.0f)
-        {
-            WorldDataManager.Instance.worldData.gameTime += 1f;
-        }
-
         if (!hasTriggered6 && timeOfDay >= 6f)
         {
+            WorldDataManager.Instance.worldData.gameTime += 1f;
             WorldDataManager.Instance.LoadSpotWithTimeOfDay(true);
+
             hasTriggered6 = true;
         }
         else if (hasTriggered6 && timeOfDay >= 19f)

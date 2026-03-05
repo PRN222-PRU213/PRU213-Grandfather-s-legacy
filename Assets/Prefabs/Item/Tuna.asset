@@ -21,6 +21,8 @@ MonoBehaviour:
   value: 3000
   MAX_WEIGHT: 500
   MAX_VALUE: 10000
+  schoolSize: 1
   fishType: 2
+  timeType: 0
   itemType: 0
   minigameType: 0

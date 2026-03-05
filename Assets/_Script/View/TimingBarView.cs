@@ -1,3 +1,4 @@
+using TMPro;
 using UnityEngine;
 using UnityEngine.UI;
 
@@ -16,6 +17,7 @@ public class TimingBarView : BasePanel
     [SerializeField] Image processMaker;
     [SerializeField] Transform roundMarkerParent;
     [SerializeField] GameObject roundMarkerPrefab;
+    [SerializeField] TextMeshProUGUI RemainingText;
 
     public void Bind(TimingBarViewModel vm)
     {
@@ -24,6 +26,7 @@ public class TimingBarView : BasePanel
         vm.OnStart += OnStart;
         vm.OnHandle += OnHandle;
         vm.OnFinish += OnFinish;
+        vm.OnRestart += OnRestart;
     }
 
     public void UnBind()
@@ -33,6 +36,7 @@ public class TimingBarView : BasePanel
         vm.OnStart -= OnStart;
         vm.OnHandle -= OnHandle;
         vm.OnFinish -= OnFinish;
+        vm.OnRestart -= OnRestart;
 
         vm = null;
     }
@@ -72,6 +76,13 @@ public class TimingBarView : BasePanel
         isSpining = false;
     }
 
+    void OnRestart()
+    {
+        processMaker.fillAmount = 0f;
+        DeleteMaker(roundMarkerParent);
+        AddMarker(roundMarkerPrefab, roundMarkerParent, vm.totalRounds);
+    }
+
     void ResetZone()
     {
         angle = Random.Range(0, 360);
@@ -103,6 +114,11 @@ public class TimingBarView : BasePanel
     void IncreaseProcess(float currentRound, float totalRounds)
     {
         processMaker.fillAmount = (float)currentRound / totalRounds;
+    }
+
+    public void UpdateRemainingFish(int count)
+    {
+        RemainingText.text = count.ToString();
     }
 
     public bool IsSuccess()

@@ -24,6 +24,7 @@ public class ItemData : ScriptableObject
     public float value;
     public float MAX_WEIGHT;
     public float MAX_VALUE;
+    public int schoolSize;
 
     [Header("Type")]
     public FishType fishType;

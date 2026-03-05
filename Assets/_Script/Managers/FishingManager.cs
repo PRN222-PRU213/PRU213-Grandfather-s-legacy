@@ -6,7 +6,8 @@ public class FishingManager : Singleton<FishingManager>
 
     private IFishingMinigame vm;
     private ItemData item;
-    private bool canFishing = false;
+    private bool isFishing = false;
+    private FishingSpotInteractable spot;
     protected override void Awake()
     {
         base.Awake();
@@ -24,22 +25,24 @@ public class FishingManager : Singleton<FishingManager>
         InputEvent.OnCloseFishingPressed -= StopFishing;
     }
 
-    public void StartFishing(ItemData item)
+    public void StartFishing(ItemData item, FishingSpotInteractable spot)
     {
         this.item = item;
-        canFishing = true;
+        this.spot = spot;
+        isFishing = true;
 
         InventoryManager.Instance.OnOpenInventoryPressed();
         CameraManager.Instance.EnterFishingView();
 
         InitAndOpen(item);
+        timingBarView.UpdateRemainingFish(spot.fishInSchool);
         InputManager.Instance.EnableFishing();
         vm.Start();
     }
 
     public void StopFishing()
     {
-        canFishing = false;
+        isFishing = false;
 
         InventoryManager.Instance.OnCloseInventoryPressed();
         CameraManager.Instance.NormalView();
@@ -50,19 +53,36 @@ public class FishingManager : Singleton<FishingManager>
     }
 
     //private
+    void RestartFishingRound()
+    {
+        isFishing = true;
+        vm.Restart();
+
+        vm.Start();
+    }
 
     void OnCatchFish()
     {
-        if (item == null || !canFishing) return;
+        if (item == null || vm == null) return;
 
-        if (vm == null) return;
-        bool result = timingBarView.IsSuccess();
-        bool isFinish = vm.Handle(result);
-
-        if (isFinish)
+        if (isFishing)
         {
-            canFishing = false;
-            InventoryManager.Instance.AddItemForPlayer(item);
+            bool result = timingBarView.IsSuccess();
+            bool isFinish = vm.Handle(result);
+
+            if (isFinish)
+            {
+                isFishing = false;
+                spot.fishInSchool--;
+                timingBarView.UpdateRemainingFish(spot.fishInSchool);
+                if (spot.fishInSchool <= 0) spot.SetAvailable(false);
+
+                InventoryManager.Instance.AddItemForPlayer(item);
+            }
+        }
+        else if (spot.fishInSchool > 0)
+        {
+            RestartFishingRound();
         }
     }
 

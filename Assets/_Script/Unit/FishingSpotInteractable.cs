@@ -7,9 +7,7 @@ public class FishingSpotInteractable : MonoBehaviour, IInteractable
     [SerializeField] public ItemData item;
     [SerializeField] private MeshRenderer meshRenderer;
 
-    [SerializeField] private int fishNumber = 2;
-
-    private int numberFishCatched = 0;
+    [SerializeField] public int fishInSchool = 1;
 
     public string GetInteractPrompt()
     {
@@ -23,12 +21,7 @@ public class FishingSpotInteractable : MonoBehaviour, IInteractable
 
     public void Interact()
     {
-        FishingManager.Instance.StartFishing(item);
-        numberFishCatched++;
-        if (numberFishCatched >= fishNumber)
-        {
-            SetAvailable(false);
-        }
+        FishingManager.Instance.StartFishing(item, this);
     }
 
     public Transform GetTransform()
@@ -42,7 +35,7 @@ public class FishingSpotInteractable : MonoBehaviour, IInteractable
         meshRenderer.enabled = available;
         if (available)
         {
-            numberFishCatched = 0;
+            fishInSchool = item.schoolSize;
         }
     }
 }
