@@ -12,7 +12,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 0184bb0e6d60d664fb460ef3950717ee, type: 3}
   m_Name: duy_quest_3
   m_EditorClassIdentifier: Assembly-CSharp::DialogueData
-  dialogueID: 'duy_quest_3 '
+  dialogueID: duy_quest_3
   lines:
   - speakerName: Duy
     text: Wow, that was fast.

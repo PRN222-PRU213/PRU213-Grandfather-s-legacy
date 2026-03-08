@@ -42,7 +42,10 @@ public class NPCController : MonoBehaviour
 
         DialogueData toPlay = ResolveDialogue(best);
         if (toPlay != null)
+        {
+            AudioManager.Instance.PlaySoundVillage();
             DialogueManager.Instance.StartDialogue(toPlay);
+        }
         else Debug.Log("no dialogue to play");
     }
 

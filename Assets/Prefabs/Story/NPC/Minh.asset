@@ -32,7 +32,7 @@ MonoBehaviour:
     checkQuestID: 
     checkStep: 0
   - dialogue: {fileID: 11400000, guid: 8d7af1582853e5d4eb4bf424f135230a, type: 2}
-    priority: 10
+    priority: 20
     oneTimeOnly: 1
     conditions:
     - type: 6

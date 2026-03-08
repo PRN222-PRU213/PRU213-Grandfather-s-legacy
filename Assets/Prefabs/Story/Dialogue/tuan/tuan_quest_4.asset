@@ -38,4 +38,4 @@ MonoBehaviour:
     text: If you have time, help me catch 2 of them.
     portrait: {fileID: 21300000, guid: 7a8ea276f119e07418af65523866f3d7, type: 3}
     setFlagAfter: 
-    triggerQuestID: 
+    triggerQuestID: quest_5

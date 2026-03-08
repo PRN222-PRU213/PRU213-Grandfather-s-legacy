@@ -30,7 +30,7 @@ MonoBehaviour:
     setFlagAfter: 
     triggerQuestID: 
   - speakerName: Tuan
-    text: Please help me catch 15 cod.
+    text: Please help me catch 9 cod.
     portrait: {fileID: 21300000, guid: 7a8ea276f119e07418af65523866f3d7, type: 3}
     setFlagAfter: 
     triggerQuestID: quest_4

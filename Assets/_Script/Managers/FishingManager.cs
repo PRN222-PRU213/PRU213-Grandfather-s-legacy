@@ -68,6 +68,8 @@ public class FishingManager : Singleton<FishingManager>
         if (isFishing)
         {
             bool result = timingBarView.IsSuccess();
+            AudioManager.Instance.PlaySoundFishing(result);
+
             bool isFinish = vm.Handle(result);
 
             if (isFinish)

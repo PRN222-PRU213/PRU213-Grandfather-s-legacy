@@ -18,9 +18,9 @@ MonoBehaviour:
   nextQuestID: 
   prerequisiteQuestIDs: []
   steps:
-  - stepDescription: 15 cods
+  - stepDescription: 9 cods
     objectives:
-    - description: 15 cods
+    - description: 9 cods
       type: 2
       targetID: cod
-      targetAmount: 15
+      targetAmount: 9
