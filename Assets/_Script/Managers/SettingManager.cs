@@ -1,4 +1,5 @@
 using UnityEngine;
+using UnityEngine.SceneManagement;
 
 public class SettingManager : Singleton<SettingManager>
 {
@@ -45,5 +46,11 @@ public class SettingManager : Singleton<SettingManager>
     public void ChangeSFX(float value)
     {
         AudioManager.Instance.ChangeVolumeSFX(value);
+    }
+
+    public void QuitGame()
+    {
+        DataManager.Instance.Save();
+        SceneManager.LoadScene("StartMenu");
     }
 }

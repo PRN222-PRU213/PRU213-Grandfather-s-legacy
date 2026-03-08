@@ -19,4 +19,8 @@ public class SettingView : BasePanel
         sliderMusic.value = music;
         sliderSFX.value = sfx;
     }
+    public void QuitButton()
+    {
+        SettingManager.Instance.QuitGame();
+    }
 }
