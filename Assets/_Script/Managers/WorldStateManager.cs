@@ -17,6 +17,11 @@ public class WorldStateManager
     public bool GetFlag(string key)
         => flags.ContainsKey(key) && flags[key];
 
+    public bool IsEmpty()
+    {
+        return flags == null || values == null || (flags.Count == 0 && values.Count == 0);
+    }
+
     // ── VALUES ─────────────────────────────────────────
     public void SetValue(string key, int value)
         => values[key] = value;

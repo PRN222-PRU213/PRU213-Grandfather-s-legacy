@@ -2,9 +2,6 @@ using UnityEngine;
 
 public class ShipController : MonoBehaviour
 {
-    // ================= CONSTANTS =========================
-
-    // ================= Serialized Fields =================
 
     // ================= State =============================
     PlayerShipData playerShipData;
@@ -17,10 +14,19 @@ public class ShipController : MonoBehaviour
     float idleDrag;
 
     Rigidbody rb;
-
-    // ================= Public Properties =================
+    [SerializeField] Light lamp;
 
     // ================= Unity Lifecycle ===================
+
+    void OnEnable()
+    {
+        InputEvent.OnLampPress += ToggerLamp;
+    }
+
+    void OnDisable()
+    {
+        InputEvent.OnLampPress -= ToggerLamp;
+    }
 
     void Start()
     {
@@ -94,37 +100,8 @@ public class ShipController : MonoBehaviour
         idleDrag = playerShipData.idleDrag;
     }
 
-    // ================= Core Logic ========================
-
-    // private void ApplyForwardMovement(float verticalInput)
-    // {
-    //     if (Mathf.Abs(verticalInput) < 0.01f)
-    //         return;
-
-    //     Vector3 forwardForce = transform.forward * verticalInput * acceleration;
-    //     rb.AddForce(forwardForce, ForceMode.Acceleration);
-    // }
-
-    // private void ApplyTurning(float horizontalInput)
-    // {
-    //     if (Mathf.Abs(horizontalInput) < 0.01f)
-    //         return;
-
-    //     // Only turn when boat is moving
-    //     if (rb.linearVelocity.magnitude < minSpeedToTurn)
-    //         return;
-
-    //     Vector3 turnTorque = Vector3.up * horizontalInput * turnStrength;
-    //     rb.AddTorque(turnTorque, ForceMode.Acceleration);
-    // }
-
-    // ================= Subsystem =========================
-
-    // ================= Event Handlers ====================
-
-    // ================= Public API ========================
-
-    // ================= Helpers ===========================
-
-    // ================= Debug / Editor ====================
+    private void ToggerLamp()
+    {
+        lamp.enabled = !lamp.enabled;
+    }
 }

@@ -68,6 +68,8 @@ public class DataManager : Singleton<DataManager>
     {
         currentGameData = new GameData();
         WorldState = new WorldStateManager();
+
+        Save();
         Debug.Log("[DataManager] New game created.");
     }
 

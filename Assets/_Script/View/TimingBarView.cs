@@ -18,6 +18,7 @@ public class TimingBarView : BasePanel
     [SerializeField] Transform roundMarkerParent;
     [SerializeField] GameObject roundMarkerPrefab;
     [SerializeField] TextMeshProUGUI RemainingText;
+    [SerializeField] TextMeshProUGUI TextNameItem;
 
     public void Bind(TimingBarViewModel vm)
     {
@@ -54,6 +55,8 @@ public class TimingBarView : BasePanel
         itemImg.sprite = vm.award.icon;
         trackZone.localEulerAngles = Vector3.zero;
         processMaker.fillAmount = 0f;
+
+        TextNameItem.text = vm.award.name;
 
         DeleteMaker(roundMarkerParent);
         AddMarker(roundMarkerPrefab, roundMarkerParent, vm.totalRounds);

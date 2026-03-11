@@ -13,13 +13,8 @@ public enum ConditionType
 
 public enum TriggerAction
 {
-    StartQuest,
-    CompleteQuestStep,
-    QueueNPCDialogue,
-    RevealMapArea,
-    SetFlag,
-    IncrementValue,
-    UnlockEncyclopediaEntry,
+    Notification,
+    Ending,
 }
 
 [System.Serializable]

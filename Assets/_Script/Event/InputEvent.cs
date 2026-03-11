@@ -1,5 +1,6 @@
 using System;
 using UnityEngine;
+using UnityEngine.InputSystem.Controls;
 
 public static class InputEvent
 {
@@ -9,6 +10,7 @@ public static class InputEvent
     public static event Action OnInteractPressed;
     public static event Action OnOpenInventoryPressed;
     public static event Action OnOpenSettingPressed;
+    public static event Action OnLampPress;
 
     // Fishing
     public static event Action OnCatchFishPressed;
@@ -39,6 +41,7 @@ public static class InputEvent
     internal static void TriggerInteract() => OnInteractPressed?.Invoke();
     internal static void TriggerOpenInventory() => OnOpenInventoryPressed?.Invoke();
     internal static void TriggerOpenSetting() => OnOpenSettingPressed?.Invoke();
+    internal static void TriggerLamp() => OnLampPress?.Invoke();
 
     // Cargo
     internal static void TriggerCloseInventory() => OnCloseInventoryPressed?.Invoke();

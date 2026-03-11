@@ -1,9 +1,14 @@
 using UnityEngine;
 
-public class Billboard : MonoBehaviour
+public class Billboard : BasePanel
 {
+    public Transform target;
+    public float heightOffset = 2f;
+
     void LateUpdate()
     {
-        transform.forward = Camera.main.transform.forward;
+        Vector3 worldPos = target.position + Vector3.up * heightOffset;
+        Vector3 screenPos = Camera.main.WorldToScreenPoint(worldPos);
+        transform.position = screenPos;
     }
 }

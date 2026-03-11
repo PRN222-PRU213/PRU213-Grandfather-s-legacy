@@ -6,11 +6,6 @@ public class DialogueManager : Singleton<DialogueManager>
 {
 
     [Header("UI")]
-    // [SerializeField] private GameObject dialoguePanel;
-    // [SerializeField] private TextMeshProUGUI speakerText;
-    // [SerializeField] private TextMeshProUGUI dialogueText;
-    // [SerializeField] private Image portraitImage;
-    // [SerializeField] private GameObject continuePrompt; // "Nhấn Space để tiếp"
     [SerializeField] private DialogueView dialogueView; // Tham chiếu đến DialogueView
 
     private DialogueData current;
@@ -89,8 +84,8 @@ public class DialogueManager : Singleton<DialogueManager>
         if (!string.IsNullOrEmpty(line.triggerQuestID))
             QuestManager.Instance.TryStartQuest(line.triggerQuestID);
 
-        if (!string.IsNullOrEmpty(line.triggerID) && line.triggerID.Equals("normal_ending"))
-            TriggerManager.Instance.ShowEnding();
+        if (!string.IsNullOrEmpty(line.triggerID))
+            TriggerManager.Instance.TryTrigger(line.triggerID);
 
     }
 

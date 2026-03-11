@@ -19,13 +19,16 @@ MonoBehaviour:
     portrait: {fileID: 21300000, guid: fc8cf6c5533875a46ad8452f2f2db892, type: 3}
     setFlagAfter: 
     triggerQuestID: 
+    triggerID: 
   - speakerName: Minh
     text: A friend on the northern island needs some help.
     portrait: {fileID: 21300000, guid: fc8cf6c5533875a46ad8452f2f2db892, type: 3}
     setFlagAfter: 
     triggerQuestID: 
+    triggerID: 
   - speakerName: Minh
     text: Go help them out.
     portrait: {fileID: 21300000, guid: fc8cf6c5533875a46ad8452f2f2db892, type: 3}
     setFlagAfter: request_north_island
     triggerQuestID: 
+    triggerID: notification_tuan

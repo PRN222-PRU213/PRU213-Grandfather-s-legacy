@@ -33,16 +33,18 @@ public class LightingManager : MonoBehaviour
 
 
 
-        if (timeOfDay >= 6.0f && timeOfDay < 19.0f)
-        {
-            WorldDataManager.Instance.LoadSpotWithTimeOfDay(true);
-            hasTriggered6 = true;
-        }
-        else
-        {
-            WorldDataManager.Instance.LoadSpotWithTimeOfDay(false);
-            hasTriggered6 = false;
-        }
+        // if (timeOfDay >= 6.0f && timeOfDay < 19.0f)
+        // {
+        //     WorldDataManager.Instance.LoadSpotWithTimeOfDay(true);
+        //     TimeEvent.OnDayTime?.Invoke();
+        //     hasTriggered6 = true;
+        // }
+        // else
+        // {
+        //     WorldDataManager.Instance.LoadSpotWithTimeOfDay(false);
+        //     TimeEvent.OnNightTime?.Invoke();
+        //     hasTriggered6 = false;
+        // }
     }
 
     private void Update()
@@ -51,7 +53,7 @@ public class LightingManager : MonoBehaviour
         {
             WorldDataManager.Instance.worldData.gameTime += 1f;
             WorldDataManager.Instance.LoadSpotWithTimeOfDay(true);
-
+            TimeEvent.OnDayTime?.Invoke();
             hasTriggered6 = true;
         }
 
@@ -59,6 +61,7 @@ public class LightingManager : MonoBehaviour
         {
             hasTriggered6 = false;
             WorldDataManager.Instance.LoadSpotWithTimeOfDay(false);
+            TimeEvent.OnNightTime?.Invoke();
         }
 
         if (Application.isPlaying)

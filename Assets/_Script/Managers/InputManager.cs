@@ -27,6 +27,8 @@ public class InputManager : Singleton<InputManager>
     private InputAction m_CloseDock;
     private InputAction m_OpenSetting;
     private InputAction m_CloseSetting;
+    private InputAction m_Lamp;
+
 
     // ================= Public Properties =================
     public InputActionAsset inputActions;
@@ -65,6 +67,7 @@ public class InputManager : Singleton<InputManager>
         m_Interact = a_ship.FindAction("Interact", true);
         m_Cargo = a_ship.FindAction("Cargo", true);
         m_OpenSetting = a_ship.FindAction("Setting", true);
+        m_Lamp = a_ship.FindAction("Lamp", true);
 
         //fishing
         m_Catch = a_fishing.FindAction("Catch", true);
@@ -99,6 +102,7 @@ public class InputManager : Singleton<InputManager>
         m_Interact.performed += ctx => InputEvent.TriggerInteract();
         m_Cargo.performed += ctx => InputEvent.TriggerOpenInventory();
         m_OpenSetting.performed += ctx => InputEvent.TriggerOpenSetting();
+        m_Lamp.performed += ctx => InputEvent.TriggerLamp();
 
         //fishing
         m_Catch.performed += ctx => InputEvent.TriggerCatchFish();

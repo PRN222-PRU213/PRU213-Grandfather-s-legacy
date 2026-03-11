@@ -56,16 +56,17 @@ public class SettingManager : Singleton<SettingManager>
         AudioManager.ResetSingleton();
         CameraManager.ResetSingleton();
         CurrencyManager.ResetSingleton();
-        DataManager.ResetSingleton();
         DialogueManager.ResetSingleton();
         FishingManager.ResetSingleton();
         InventoryManager.ResetSingleton();
         NPCManager.ResetSingleton();
         QuestManager.ResetSingleton();
         TriggerManager.ResetSingleton();
+        SettingManager.ResetSingleton();
 
+        DataManager.ResetSingleton();
 
         SceneManager.LoadScene("StartMenu");
-        SettingManager.ResetSingleton();
+
     }
 }

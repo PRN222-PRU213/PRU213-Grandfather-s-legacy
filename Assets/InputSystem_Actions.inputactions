@@ -1259,6 +1259,15 @@
                     "processors": "",
                     "interactions": "",
                     "initialStateCheck": false
+                },
+                {
+                    "name": "Lamp",
+                    "type": "Button",
+                    "id": "3f3fd07c-530d-4b9f-90bb-56ef3b8445c0",
+                    "expectedControlType": "",
+                    "processors": "",
+                    "interactions": "",
+                    "initialStateCheck": false
                 }
             ],
             "bindings": [
@@ -1457,6 +1466,17 @@
                     "processors": "",
                     "groups": "",
                     "action": "Setting",
+                    "isComposite": false,
+                    "isPartOfComposite": false
+                },
+                {
+                    "name": "",
+                    "id": "4484eb65-cc6e-4c53-9d20-f32a643d067b",
+                    "path": "<Keyboard>/H",
+                    "interactions": "",
+                    "processors": "",
+                    "groups": "",
+                    "action": "Lamp",
                     "isComposite": false,
                     "isPartOfComposite": false
                 }

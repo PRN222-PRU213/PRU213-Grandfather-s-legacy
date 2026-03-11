@@ -19,13 +19,16 @@ MonoBehaviour:
     portrait: {fileID: 21300000, guid: ac69cb07e8694a240812a39b74b2330b, type: 3}
     setFlagAfter: 
     triggerQuestID: 
+    triggerID: 
   - speakerName: Duy
     text: Thanks a lot.
     portrait: {fileID: 21300000, guid: ac69cb07e8694a240812a39b74b2330b, type: 3}
     setFlagAfter: 
     triggerQuestID: 
+    triggerID: 
   - speakerName: Duy
     text: I heard Minh wants to talk to you about something.
     portrait: {fileID: 21300000, guid: ac69cb07e8694a240812a39b74b2330b, type: 3}
     setFlagAfter: duy_finish
     triggerQuestID: 
+    triggerID: notification_minh
