@@ -2,7 +2,6 @@ using UnityEngine;
 
 public abstract class BaseInventoryController : MonoBehaviour
 {
-    [SerializeField] private CurrencyManager currencyManager;
     [SerializeField] protected RectTransform inventoryFrame;
     [SerializeField] protected InventoryView inventoryView;
 
@@ -67,13 +66,13 @@ public abstract class BaseInventoryController : MonoBehaviour
     {
         int price = (int)item.value;
         viewModel.DestroyListItem(item.itemId, 1);
-        currencyManager.AddMoney(price);
+        CurrencyManager.Instance.AddMoney(price);
     }
 
     public void SaleAllItem()
     {
         int totalPrice = viewModel.SaleAllItem();
-        currencyManager.AddMoney(totalPrice);
+        CurrencyManager.Instance.AddMoney(totalPrice);
     }
 
     protected abstract bool IsPlayerInventory();

@@ -18,6 +18,9 @@ public class ProgressionData
     // ── MISC ───────────────────────────────────────────
     public int encyclopediaEntries;
     public string currentMainQuestID;
+
+    // ── WORLD STATE ────────────────────────────────────
+    public WorldStateSaveData worldStateSaveData = new WorldStateSaveData();
 }
 
 [System.Serializable]

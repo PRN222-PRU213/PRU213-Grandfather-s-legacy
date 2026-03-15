@@ -3,7 +3,6 @@ using UnityEngine;
 
 public class FishingSpotInteractable : MonoBehaviour, IInteractable
 {
-    [SerializeField] private FishingManager fishingManager;
     [SerializeField] private bool isAvailable = true;
     [SerializeField] public ItemData item;
     [SerializeField] private MeshRenderer meshRenderer;
@@ -22,7 +21,7 @@ public class FishingSpotInteractable : MonoBehaviour, IInteractable
 
     public void Interact()
     {
-        fishingManager.StartFishing(item, this);
+        FishingManager.Instance.StartFishing(item, this);
     }
 
     public Transform GetTransform()

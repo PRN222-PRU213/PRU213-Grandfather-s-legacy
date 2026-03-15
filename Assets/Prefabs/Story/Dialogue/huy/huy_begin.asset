@@ -15,14 +15,12 @@ MonoBehaviour:
   dialogueID: huy_begin
   lines:
   - speakerName: Huy
-    text: 'do you have 10000$ '
+    text: 'nhin con cac '
     portrait: {fileID: 21300000, guid: ebd7685385771194594c8b52b7c5e292, type: 3}
     setFlagAfter: 
     triggerQuestID: 
-    triggerID: 
   - speakerName: Huy
-    text: pls help me bro
+    text: xin 4k gui xe di
     portrait: {fileID: 21300000, guid: ebd7685385771194594c8b52b7c5e292, type: 3}
     setFlagAfter: 
-    triggerQuestID: quest_6
-    triggerID: 
+    triggerQuestID: 

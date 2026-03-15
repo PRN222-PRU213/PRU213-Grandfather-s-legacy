@@ -3,9 +3,7 @@ using UnityEngine;
 
 public class QuestManager : Singleton<QuestManager>
 {
-    [SerializeField] private CurrencyManager currencyManager;
     [SerializeField] private StoryDatabase database;
-    [SerializeField] private QuestView questView;
 
     private ProgressionData progression => DataManager.Instance.Progression;
     protected override void Awake()
@@ -39,9 +37,6 @@ public class QuestManager : Singleton<QuestManager>
 
         progression.activeQuests.Add(progress);
         Debug.Log($"[QuestManager] Bắt đầu quest: {data.questName}");
-
-        questView.Show();
-        questView.SetContent(data.questName);
 
         DataManager.Instance.Save();
         return true;
@@ -115,7 +110,7 @@ public class QuestManager : Singleton<QuestManager>
                 return count >= obj.targetAmount;
 
             case ObjectiveType.CheckCurrency:
-                float currentMoney = currencyManager.GetCurrentMoney();
+                float currentMoney = CurrencyManager.Instance.GetCurrentMoney();
                 Debug.Log($"[QuestManager] Kiểm tra tiền: {currentMoney}/{obj.targetAmount}");
 
                 return currentMoney >= obj.targetAmount;
@@ -152,7 +147,7 @@ public class QuestManager : Singleton<QuestManager>
                     break;
 
                 case ObjectiveType.CheckCurrency:
-                    bool success = currencyManager.SpendMoney(stepObjectives[i].targetAmount);
+                    bool success = CurrencyManager.Instance.SpendMoney(stepObjectives[i].targetAmount);
                     if (!success) return;
 
                     // ── THÊM: đánh dấu xong ───────────────
@@ -192,8 +187,6 @@ public class QuestManager : Singleton<QuestManager>
         progression.completedQuests.Add(quest.questID);
 
         Debug.Log($"[QuestManager] Hoàn thành: {quest.questName}");
-
-        questView.Hide();
 
         // Tự mở quest tiếp theo trong chuỗi
         if (!string.IsNullOrEmpty(data.nextQuestID))

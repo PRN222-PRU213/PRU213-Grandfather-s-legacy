@@ -3,7 +3,6 @@ using UnityEngine;
 
 public class WorldDataManager : Singleton<WorldDataManager>
 {
-    [SerializeField] CameraManager cameraManager;
     [SerializeField] List<FishingSpotInteractable> fishingSpots;
 
     [SerializeField] private TimeView timeView;
@@ -33,14 +32,14 @@ public class WorldDataManager : Singleton<WorldDataManager>
     public void StartDocking(string dockName)
     {
         timeView.Show();
-        cameraManager.EnterIslandView(dockName);
+        CameraManager.Instance.EnterIslandView(dockName);
         InputManager.Instance.EnableDock();
     }
 
     private void EndDocking()
     {
         timeView.Hide();
-        cameraManager.NormalView();
+        CameraManager.Instance.NormalView();
         InputManager.Instance.EnableShip();
     }
 
@@ -68,5 +67,6 @@ public class WorldDataManager : Singleton<WorldDataManager>
     public void LoadWorldData()
     {
         worldData = DataManager.Instance.currentGameData.worldData;
+
     }
 }

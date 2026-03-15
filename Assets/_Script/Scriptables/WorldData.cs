@@ -9,6 +9,9 @@ public class WorldData
     public bool isNight;
 
     public List<FishingSpot> discoveredFishingSpots;
+    public List<string> collectedRelics;
+    public List<string> visitedLocations;
+    public List<POIData> pointsOfInterest;
 
     public WorldData()
     {
@@ -16,6 +19,9 @@ public class WorldData
         currentDay = 1;
         isNight = false;
         discoveredFishingSpots = new List<FishingSpot>();
+        collectedRelics = new List<string>();
+        visitedLocations = new List<string>();
+        pointsOfInterest = new List<POIData>();
     }
 }
 

@@ -9,15 +9,9 @@ public class InteractionController : MonoBehaviour
 
     private IInteractable currentInteractable;
 
-    void OnEnable()
+    void Start()
     {
-        InputEvent.OnInteractPressed -= OnInteractivePress;
         InputEvent.OnInteractPressed += OnInteractivePress;
-    }
-
-    void OnDisable()
-    {
-        InputEvent.OnInteractPressed -= OnInteractivePress;
     }
 
     void Update()

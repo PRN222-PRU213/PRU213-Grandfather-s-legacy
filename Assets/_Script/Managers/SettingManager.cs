@@ -1,9 +1,14 @@
 using UnityEngine;
 using UnityEngine.SceneManagement;
 
-public class SettingManager : MonoBehaviour
+public class SettingManager : Singleton<SettingManager>
 {
     [SerializeField] private SettingView settingView;
+
+    protected override void Awake()
+    {
+        base.Awake();
+    }
     void OnEnable()
     {
         InputEvent.OnOpenSettingPressed += OnOpenSettingPressed;
@@ -33,11 +38,6 @@ public class SettingManager : MonoBehaviour
         InputManager.Instance.EnableShip();
     }
 
-    public void ToggleSettingPressed()
-    {
-        settingView.Toggle();
-    }
-
     public void ChangeMusic(float value)
     {
         AudioManager.Instance.ChangeVolumeMusic(value);
@@ -48,22 +48,25 @@ public class SettingManager : MonoBehaviour
         AudioManager.Instance.ChangeVolumeSFX(value);
     }
 
-    public void ReturnMenu()
+    public void QuitGame()
     {
         DataManager.Instance.Save();
         WorldDataManager.ResetSingleton();
+        InputManager.ResetSingleton();
+        AudioManager.ResetSingleton();
+        CameraManager.ResetSingleton();
+        CurrencyManager.ResetSingleton();
+        DialogueManager.ResetSingleton();
+        FishingManager.ResetSingleton();
         InventoryManager.ResetSingleton();
-        TriggerManager.ResetSingleton();
+        NPCManager.ResetSingleton();
         QuestManager.ResetSingleton();
+        TriggerManager.ResetSingleton();
+        SettingManager.ResetSingleton();
 
         DataManager.ResetSingleton();
 
         SceneManager.LoadScene("StartMenu");
 
-    }
-
-    public void QuitGame()
-    {
-        Application.Quit();
     }
 }

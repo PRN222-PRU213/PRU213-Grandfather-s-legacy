@@ -1,9 +1,14 @@
 using UnityEngine;
 
-public class CurrencyManager : MonoBehaviour
+public class CurrencyManager : Singleton<CurrencyManager>
 {
     [SerializeField] private CurrencyView currencyView;
     private EconomyData economyData;
+
+    protected override void Awake()
+    {
+        base.Awake();
+    }
 
     void Start()
     {

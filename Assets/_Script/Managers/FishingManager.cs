@@ -1,14 +1,17 @@
 using UnityEngine;
 
-public class FishingManager : MonoBehaviour
+public class FishingManager : Singleton<FishingManager>
 {
     [SerializeField] TimingBarView timingBarView;
-    [SerializeField] CameraManager cameraManager;
 
     private IFishingMinigame vm;
     private ItemData item;
     private bool isFishing = false;
     private FishingSpotInteractable spot;
+    protected override void Awake()
+    {
+        base.Awake();
+    }
 
     void OnEnable()
     {
@@ -29,7 +32,7 @@ public class FishingManager : MonoBehaviour
         isFishing = true;
 
         InventoryManager.Instance.OnOpenInventoryPressed();
-        cameraManager.EnterFishingView();
+        CameraManager.Instance.EnterFishingView();
 
         InitAndOpen(item);
         timingBarView.UpdateRemainingFish(spot.fishInSchool);
@@ -42,7 +45,7 @@ public class FishingManager : MonoBehaviour
         isFishing = false;
 
         InventoryManager.Instance.OnCloseInventoryPressed();
-        cameraManager.NormalView();
+        CameraManager.Instance.NormalView();
 
         Clear();
         InputManager.Instance.EnableShip();
