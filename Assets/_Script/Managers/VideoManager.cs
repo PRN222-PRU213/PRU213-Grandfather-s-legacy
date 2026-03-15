@@ -47,6 +47,10 @@ public class VideoManager : MonoBehaviour
         videoPlayer.loopPointReached += OnVideoEnd;
         videoPlayer.Play();
     }
+    /// <summary>
+    /// /////
+    /// </summary>
+    /// <param name="vp"></param>
 
 
     void OnVideoEnd(VideoPlayer vp)
